@@ -9,7 +9,8 @@
 <fmt:setLocale value="${lang}" />
 <fmt:setBundle basename="messages"/>
 
-<% String debug = Tools.getConfigProperty("debug");%>
+<% String debug = Tools.getConfigProperty("debug").trim();%>
+<% System.out.println("debug==" + debug);%>
 
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
   "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
@@ -34,8 +35,8 @@
         <input class="forminput" type="submit" value="<fmt:message key="label.sendform" />"/>
     </form>
     
-    <c:if test="${debug=='false'}">
+    <% if(debug.equals("false")){%>
         <script type="text/javascript">window.onload = function(){document.paymentForm.submit();};</script>
-    </c:if>
+    <% }%>
 </body>
 </html>

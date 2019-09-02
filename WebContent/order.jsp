@@ -12,8 +12,17 @@
 <fmt:setLocale value="${lang}" />
 <fmt:setBundle basename="messages"/>
 
-<% boolean iframe = (Tools.getConfigProperty("action_mode") == "IFRAME") ? true : false;%>
-<% String target = (Tools.getConfigProperty("action_mode") == "IFRAME") ? " target=\"payframe\" " : "";%>
+<% String target = "";%>
+<% boolean iframe = false;%>
+
+<% String mode = Tools.getConfigProperty("action_mode").trim();
+   if(mode.equals("IFRAME")){
+	   target = " target=\"payframe\" ";
+	   iframe = true;
+   }
+%>
+<% System.out.println("iframe==" + iframe);%>
+<% System.out.println("target==" + target);%>
 
 <!DOCTYPE html>
 <html lang="${lang}">
@@ -95,7 +104,7 @@
             
             <h2><fmt:message key="label.formexamples" /> </h2>
             <h2 style="text-align: center;"><fmt:message key="label.checkouttitle" /></h2>
-            <form class="form-horizontal" role="form" action="standardpayment" method="post" id="checkout_form" onsubmit="return checkmode();" >
+            <form class="form-horizontal" role="form" action="standardpayment" method="post" id="checkout_form" onsubmit="return checkmode();" <%=target %>>
             <button type="button" class="accordion"><fmt:message key="label.orderdetails" /></button>
                 <div class="panel">
                     <div class="col-md-9">
@@ -183,7 +192,7 @@
                       <input type="radio" id="paymentmethod" name="paymentmethod" value="multi2"> <fmt:message key="label.x2payment" /><br>
                 </div>
 
-                <c:if test="${iframe==true}"> <div id="iframeHolder"></div> </c:if>
+                <% if (iframe){%> <div id="iframeHolder"></div> <% }%>
                 <button class="forminput" id="submitButton" type="submit" form="checkout_form" value="Submit"><fmt:message key="label.sendform" /></button>
 
                 <script type="text/javascript">
