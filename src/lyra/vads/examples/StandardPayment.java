@@ -20,8 +20,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import lyra.vads.sdk.Api;
-import lyra.vads.tools.MyLogger;
-import lyra.vads.tools.ReadPropertyFile;
+import lyra.vads.tools.Tools;
 
 /**
  * Servlet implementation class StandardPayment
@@ -37,8 +36,8 @@ public class StandardPayment extends HttpServlet {
     public StandardPayment() {
         super();
         try {
-            MyLogger.setup();
-            key = (ReadPropertyFile.getConfigProperty("ctx_mode") == "PRODUCTION") ? ReadPropertyFile.getConfigProperty("key_prod") : ReadPropertyFile.getConfigProperty("key_test");
+            Tools.setupLogger();
+            key = (Tools.getConfigProperty("ctx_mode") == "PRODUCTION") ? Tools.getConfigProperty("key_prod") : Tools.getConfigProperty("key_test");
         } catch (IOException e) {
             // TODO Auto-generated catch block
             e.printStackTrace();
@@ -52,11 +51,11 @@ public class StandardPayment extends HttpServlet {
         // TODO Auto-generated method stub
         TreeMap<String, String> requestData = new TreeMap<String, String>();
         //Prepare config parameters
-        requestData.put("vads_site_id", ReadPropertyFile.getConfigProperty("site_id"));
-        requestData.put("vads_ctx_mode", ReadPropertyFile.getConfigProperty("ctx_mode"));
-        requestData.put("vads_return_mode", ReadPropertyFile.getConfigProperty("return_mode"));
-        requestData.put("vads_url_return", ReadPropertyFile.getConfigProperty("url_return"));
-        requestData.put("vads_action_mode", ReadPropertyFile.getConfigProperty("action_mode"));
+        requestData.put("vads_site_id", Tools.getConfigProperty("site_id"));
+        requestData.put("vads_ctx_mode", Tools.getConfigProperty("ctx_mode"));
+        requestData.put("vads_return_mode", Tools.getConfigProperty("return_mode"));
+        requestData.put("vads_url_return", Tools.getConfigProperty("url_return"));
+        requestData.put("vads_action_mode", Tools.getConfigProperty("action_mode"));
         
         requestData.put("vads_version", "V2");
         requestData.put("vads_page_action", "PAYMENT");
@@ -72,7 +71,7 @@ public class StandardPayment extends HttpServlet {
             String key = entry.getKey();
             String[] valuetab = entry.getValue();
 
-            if(valuetab.length==1){
+            if(valuetab.length==1 && (key.indexOf("vads_") == 0)){
                 String value = valuetab[0].toString();
                 requestData.put(key, value);
             }
@@ -81,20 +80,35 @@ public class StandardPayment extends HttpServlet {
         DateFormat df = new SimpleDateFormat("yyyyMMddHHmmss");
         Date dateobj = new Date();
         requestData.put("vads_trans_date", df.format(dateobj));
-        requestData.put("vads_trans_id", "123459");
+        requestData.put("vads_trans_id", "123460");
+        
+        //iframe mode
+        if (Tools.getConfigProperty("action_mode") == "IFRAME") {
+            // hide logos below payment fields
+            requestData.put("vads_theme_config", "3DS_LOGOS=false;");
+
+            // enable automatic redirection
+            requestData.put("vads_redirect_enabled", "1");
+            requestData.put("vads_redirect_success_timeout", "0");
+            requestData.put("vads_redirect_error_timeout", "0");
+
+            String return_url = (String) requestData.get("url_return");
+            String sep = (return_url.indexOf("?") < 0) ? "?" : "&";
+            requestData.put("vads_url_return", return_url + sep + "content_only=1");
+        }
 
         // TODO Auto-generated method stub
         logger.info("Info Log");
         try {
             request.setAttribute("signature", Api.buildSignature(requestData, this.key, 
-                    ReadPropertyFile.getConfigProperty("sign_algo")));
+                    Tools.getConfigProperty("sign_algo")));
         } catch (InvalidKeyException | NoSuchAlgorithmException e) {
             // TODO Auto-generated catch block
             e.printStackTrace();
         }
         /* Création ou récupération de la session */
         request.setAttribute("parameters", requestData);
-        request.setAttribute("url", ReadPropertyFile.getConfigProperty("platform_url"));
+        request.setAttribute("url", Tools.getConfigProperty("platform_url"));
         
         for (Entry<String, String> entry : requestData.entrySet()) {
             System.out.println("Key: " + entry.getKey() + ". Value: " + entry.getValue());

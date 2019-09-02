@@ -1,6 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@ page import="java.util.Date"%>
+<%@ page import="lyra.vads.tools.Tools" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt"%>
 
@@ -10,6 +11,9 @@
 <fmt:requestEncoding value="UTF-8" />
 <fmt:setLocale value="${lang}" />
 <fmt:setBundle basename="messages"/>
+
+<% boolean iframe = (Tools.getConfigProperty("action_mode") == "IFRAME") ? true : false;%>
+<% String target = (Tools.getConfigProperty("action_mode") == "IFRAME") ? " target=\"payframe\" " : "";%>
 
 <!DOCTYPE html>
 <html lang="${lang}">
@@ -91,8 +95,8 @@
             
             <h2><fmt:message key="label.formexamples" /> </h2>
             <h2 style="text-align: center;"><fmt:message key="label.checkouttitle" /></h2>
-            <form class="form-horizontal" role="form" action="standardpayment" method="post" id="checkout_form">
-                <button type="button" class="accordion"><fmt:message key="label.orderdetails" /></button>
+            <form class="form-horizontal" role="form" action="standardpayment" method="post" id="checkout_form" onsubmit="return checkmode();" >
+            <button type="button" class="accordion"><fmt:message key="label.orderdetails" /></button>
                 <div class="panel">
                     <div class="col-md-9">
                         <table class="table table-striped">
@@ -173,7 +177,57 @@
 
                 </div>
 
-                <button class="forminput" id="submitButton" type="submit" form="checkout_form" value="Submit" action=""><fmt:message key="label.sendform" /></button>
+                <button type="button" class="accordion"><fmt:message key="label.payment" /></button>
+                <div>
+                      <input type="radio" id="paymentmethod" name="paymentmethod" value="standard" checked> <fmt:message key="label.stdpayment" /><br>
+                      <input type="radio" id="paymentmethod" name="paymentmethod" value="multi2"> <fmt:message key="label.x2payment" /><br>
+                </div>
+
+                <c:if test="${iframe==true}"> <div id="iframeHolder"></div> </c:if>
+                <button class="forminput" id="submitButton" type="submit" form="checkout_form" value="Submit"><fmt:message key="label.sendform" /></button>
+
+                <script type="text/javascript">
+                    function checkmode() {
+                        var paymentmethod = $('input:radio[name="paymentmethod"]:checked').val();
+                        var actionfile = '';
+                        switch (paymentmethod) {
+                          case 'standard':
+                            actionfile = "StandardPayment";
+                            break;
+                          case 'multi2':
+                            actionfile = "MultiPayment";
+                            break;
+                          default:
+                            actionfile = "StandardPayment";
+                        }
+                        document.getElementById("checkout_form").action = actionfile;
+                        <% if (iframe){%>
+                            //disable the submit button
+                            enableSubmitButton();
+                            $('#iframeHolder').html('<iframe name="payframe" src="' + actionfile + '" width="50%" height="550" scrolling="yes" /> <div style="float:right;"><button class="close" type="button" onclick="removeIframe();">X</button></div>');
+                        <% }%>
+                    }
+
+                    <% if (iframe){%>
+                        function removeIframe() {
+                            $('#iframeHolder').html('');
+                            //disable the submit button
+                             enableSubmitButton();
+                         }
+
+                         function diableSubmitButton() {
+                            $('#iframeHolder').html('');
+                            //enable the submit button
+                             $("#submitButton").attr("disabled", true);
+                         }
+
+                         function enableSubmitButton() {
+                            $('#iframeHolder').html('');
+                            //enable the submit button
+                             $("#submitButton").attr("disabled", false);
+                         }
+                     <% }%>
+                </script>
             </form>
             
             <h2><fmt:message key="label.paymentanalysis" /> </h2>

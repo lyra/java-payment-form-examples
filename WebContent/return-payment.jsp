@@ -8,6 +8,7 @@
 
 <c:set var="lang" value="${not empty request.vads_language ? request.vads_language : not empty lang  ? lang :
                         pageContext.request.locale}" scope="session" />
+<fmt:requestEncoding value="UTF-8" />
 <fmt:setLocale value="${lang}" />
 <fmt:setBundle basename="messages"/>
 
