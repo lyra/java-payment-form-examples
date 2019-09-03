@@ -2,6 +2,7 @@
     pageEncoding="UTF-8"%>
 <%@ page import = "java.util.Map" %>
 <%@ page import = "lyra.vads.sdk.Api" %>
+<%@ page import = "lyra.vads.tools.Tools" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt"%>
 <%@ taglib uri = "http://java.sun.com/jsp/jstl/functions" prefix = "fn" %>
@@ -12,12 +13,10 @@
 <fmt:setLocale value="${lang}" />
 <fmt:setBundle basename="messages"/>
 
-<c:set var="guess" value="12"/>
-
 <% Map<String, String[]> parameters = request.getParameterMap();%>
-<c:set var="authentified" value="${false}"/>
-<c:set var="authStatus" value="label.${(authentified) ? 'validsign' : 'invalidsigndesc'}" scope="session" />
-<c:if test="${authentified}">
+<% boolean authentified = Tools.isAuthentified(request);%>
+<% if(authentified==true){%>
+    <c:set var="authStatus" value="label.validsign" scope="session" />
     <c:set var="transStatus" value="label.${(not empty param.vads_trans_status) ? fn:toLowerCase(param.vads_trans_status) : 'none'}" scope="session" />
     <c:set var="authResult" value="label.vads_auth_result_${(not empty param.vads_auth_result) ? param.vads_auth_result : 'none'}" scope="session" />
     <c:set var="result" value="label.${(not empty param.vads_result) ? param.vads_result : 'none'}" scope="session" />
@@ -28,8 +27,9 @@
     <c:set var="threedsStatus" value="label.vads_threeds_status_${(not empty param.vads_threeds_status) ? fn:toLowerCase(param.vads_threeds_status) : 'x'}" scope="session" />
     <c:set var="captureDelay" value="${(not empty param.vads_capture_delay) ? param.vads_capture_delay : ''}" scope="session" />
     <c:set var="validationMode" value="label.vads_validation_mode_${(not empty param.vads_validation_mode) ? fn:toLowerCase(param.vads_validation_mode) : 'x'}" scope="session" />
-</c:if>
-
+<% }else{%>
+    <c:set var="authStatus" value="label.invalidsigndesc" scope="session" />
+<% }%>
 <!DOCTYPE html>
 <html lang="${lang}">
 <head>
@@ -94,7 +94,7 @@
                 </tr>
             </table>
             </div>
-            <c:if test="${authentified}">
+            <% if(authentified==true){%>
             <button type="button" class="accordion"><fmt:message key="label.responsessettings" /></button>
             <div class="panel">
                     <label style="width: 20%" for="vads_trans_status">vads_trans_status</label>
@@ -153,7 +153,7 @@
                     <br>
                 <%}%>
             </div>
-            </c:if>
+            <% }%>
             <br />
             <h1><fmt:message key="label.paymentresponseanalysis" /> </h1>
             <div id="Info">

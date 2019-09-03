@@ -2,15 +2,24 @@ package lyra.vads.tools;
 
 import java.io.File;
 import java.io.IOException;
+import java.io.UnsupportedEncodingException;
+import java.security.InvalidKeyException;
+import java.security.NoSuchAlgorithmException;
 import java.util.logging.ConsoleHandler;
 import java.util.logging.FileHandler;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import java.util.logging.SimpleFormatter;
+
+import javax.servlet.http.HttpServletRequest;
+
+import lyra.vads.sdk.Api;
+
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.util.Properties;
 import java.util.Set;
+import java.util.TreeMap;
 
 public class Tools {
     static private FileHandler fileTxt;
@@ -51,7 +60,7 @@ public class Tools {
         try {
             FileInputStream ip= new FileInputStream("D:\\Developpement\\workspace-plugins\\example\\java-payment-form-examples\\src\\lyra\\vads\\config\\config.properties");
             prop.load(ip);
-            return prop.getProperty(param);
+            return prop.getProperty(param).trim();
         } catch (FileNotFoundException e) {
             e.printStackTrace();
             return "";
@@ -77,8 +86,29 @@ public class Tools {
         }
     }
     
-    public static void main(String[] args) {
-        System.out.println(Tools.getConfigProperty("site_id"));
-        System.out.println(System.getProperty("user.dir") + "/src/lyra/vads/config/config.properties");
+    
+    public static boolean isAuthentified(TreeMap<String, String> formParameters) {
+        
+        String secretKey = (Tools.getConfigProperty("ctx_mode") == "PRODUCTION") ? Tools.getConfigProperty("key_prod") : Tools.getConfigProperty("key_test");; 
+        String signAlgo = Tools.getConfigProperty("sign_algo");
+        String receivedSignature = formParameters.get("signature");
+        try {
+            String calculatedSignature = Api.buildSignature(formParameters, secretKey, signAlgo);
+            if(calculatedSignature.equals(receivedSignature)) return true;
+        } catch (InvalidKeyException | NoSuchAlgorithmException | UnsupportedEncodingException e) {
+            // TODO Auto-generated catch block
+            e.printStackTrace();
+            return false;
+        }
+        return false;
+    }
+    
+    public static boolean isAuthentified(HttpServletRequest request) {
+        String secretKey = (Tools.getConfigProperty("ctx_mode") == "PRODUCTION") ? Tools.getConfigProperty("key_prod") : Tools.getConfigProperty("key_test");
+        String signAlgo = Tools.getConfigProperty("sign_algo");
+        String receivedSignature = request.getParameter("signature"); 
+        String calculatedSignature = Api.buildSignature(request, secretKey, signAlgo);
+        if(calculatedSignature.equals(receivedSignature)) return true;
+        return false; 
     }
 }

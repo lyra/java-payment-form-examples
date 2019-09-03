@@ -10,7 +10,6 @@
 <fmt:setBundle basename="messages"/>
 
 <% String debug = Tools.getConfigProperty("debug").trim();%>
-<% System.out.println("debug==" + debug);%>
 
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
   "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
@@ -21,18 +20,26 @@
 <link href="assets/css/style.css" rel="stylesheet" type="text/css"/>
 </head>
 <body style="padding: 10%; padding-top: 0%">
-    <h1 style="text-align: center;"><fmt:message key="label.paymentform" /></h1>
+    <% if(debug.equals("true")){%><h1 style="text-align: center;"><fmt:message key="label.paymentform" /></h1><% }%>
     <form name="paymentForm" id="paymentForm" action="${url}" method="post">
-
-        <c:forEach var="p" items="${parameters}">
-            <label style="width:50%" for="${p.key}">${p.key}</label>
-            <input style="width:100%" class="forminput" name="${p.key}" value="${p.value}" type="text" />
-            <br>
-        </c:forEach>
-        <label style="width:50%" for="signature">signature</label>
-        <input style="width:100%" class="forminput" name="signature" value="${signature}" type="text" />
-        
-        <input class="forminput" type="submit" value="<fmt:message key="label.sendform" />"/>
+        <% if(debug.equals("false")){%>
+	        <c:forEach var="p" items="${parameters}">        
+                <input name="${p.key}" value="${p.value}" type="hidden" />
+            </c:forEach>
+            <input name="signature" value="${signature}" type="hidden" />
+            
+            <label style="text-align: center;"><fmt:message key="label.redirect_message_defaut" /></label>
+        <% }else{%>
+	        <c:forEach var="p" items="${parameters}">
+                <label style="width:50%" for="${p.key}">${p.key}</label>
+                <input style="width:100%" class="forminput" name="${p.key}" value="${p.value}" type="text" />
+                <br>
+            </c:forEach>
+            <label style="width:50%" for="signature">signature</label>
+            <input style="width:100%" class="forminput" name="signature" value="${signature}" type="text" />
+            
+            <input class="forminput" type="submit" value="<fmt:message key="label.sendform" />"/>
+        <% }%>
     </form>
     
     <% if(debug.equals("false")){%>

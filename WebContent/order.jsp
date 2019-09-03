@@ -21,8 +21,6 @@
 	   iframe = true;
    }
 %>
-<% System.out.println("iframe==" + iframe);%>
-<% System.out.println("target==" + target);%>
 
 <!DOCTYPE html>
 <html lang="${lang}">

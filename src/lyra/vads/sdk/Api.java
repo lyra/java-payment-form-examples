@@ -107,8 +107,7 @@ public class Api {
      secretKey, String signAlgo) throws NoSuchAlgorithmException, InvalidKeyException, UnsupportedEncodingException {
       // Build message from parameters
       for (Entry<String, String> entry : formParameters.entrySet()) {
-          if(!entry.getKey().startsWith("vads_"))
-            System.out.println("Key: " + entry.getKey() + ". Value: " + entry.getValue());
+          if(!entry.getKey().startsWith("vads_")) formParameters.remove(entry.getKey());
       }
       String message = String.join("+", formParameters.values());
       message += "+" + secretKey;
@@ -126,8 +125,6 @@ public class Api {
             String paramName = paramNames.nextElement();
             if (paramName.startsWith("vads_")) {
                 vadsFields.add(paramName);
-            }else {
-                vadsFields.add("vads_" + paramName);
             }
         }
         // Calcule la signature
@@ -226,10 +223,5 @@ public class Api {
         SecretKeySpec macKey = new SecretKeySpec( keyBytes, "RAW" );
         hmacSha1.init( macKey );
         return hmacSha1 .doFinal( text );
-    }
-    
-    public static boolean isAuthentified() {
-        return false;
-        
     }
 }

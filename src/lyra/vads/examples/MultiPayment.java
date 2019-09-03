@@ -64,8 +64,8 @@ public class MultiPayment extends HttpServlet {
         
         double total_in_cents = Integer.valueOf(request.getParameter("vads_amount"));
         double first = 50;
-        double count = 2;
-        double period = 30;
+        Integer count = 2;
+        Integer period = 30;
         // Set value to payment_config.
         String first_in_cents = String.valueOf(Math.round((first / 100) * total_in_cents));
         
