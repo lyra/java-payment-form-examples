@@ -62,12 +62,12 @@ public class MultiPayment extends HttpServlet {
         requestData.put("vads_payment_config", "SINGLE");
         requestData.put("vads_capture_delay", "0");
         
-        Integer total_in_cents = Integer.valueOf(request.getParameter("vads_amount"));
-        Integer first = 50;
-        Integer count = 2;
-        Integer period = 30;
+        double total_in_cents = Integer.valueOf(request.getParameter("vads_amount"));
+        double first = 50;
+        double count = 2;
+        double period = 30;
         // Set value to payment_config.
-        String first_in_cents = String.valueOf(Math.round(total_in_cents / count));
+        String first_in_cents = String.valueOf(Math.round((first / 100) * total_in_cents));
         
         requestData.put("vads_payment_config", "MULTI:first=" + first_in_cents + ";count=" + String.valueOf(count) + ";period=" + String.valueOf(period));
         
