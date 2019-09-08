@@ -27,7 +27,7 @@ public class Api {
     /**
      * The list of encodings supported by the API.
      *
-     * @var array[string]
+     * @var String[]
      */
     public static String[] SUPPORTED_ENCODINGS = {
         "UTF-8",
@@ -42,7 +42,7 @@ public class Api {
     /**
      * Returns an array of languages accepted by the payment gateway.
      *
-     * @return array[string][string]
+     * @return Hashtable<String, String>
      */
     public Hashtable<String, String> getSupportedLanguages()
     {
@@ -66,7 +66,7 @@ public class Api {
     /**
      * Returns true if the entered language (ISO code) is supported.
      *
-     * @param string $lang
+     * @param String lang
      * @return boolean
      */
     public boolean isSupportedLanguage(String lang)
@@ -79,29 +79,22 @@ public class Api {
      * To be independent from shared/persistent counters, we use the number of 1/10 seconds since midnight
      * which has the appropriatee format (000000-899999) and has great chances to be unique.
      *
-     * @param int $timestamp
-     * @return string the generated trans_id
+     * @return int the generated trans_id
      */
     public int generateTransId()
     {
-        //return UUID.randomUUID().toString();
         Random r = new Random();
         int id = r.ints(1, (899999 + 1)).findFirst().getAsInt();
         return id;
     }
 
     /**
-     * Compute the signature. Parameters must be in UTF-8.
+     * Build signature from provided parameters and secret key. Parameters must be in UTF-8.
      *
-     * @param array[string][string] $parameters payment gateway request/response parameters
-     * @param string $key shop certificate
-     * @param string $algo signature algorithm
-     * @param boolean $hashed set to false to get the unhashed signature
-     * @return string
-     */
-    /**
-     * Build signature (HMAC SHA-256 version) from provided parameters and secret key.
-     * Parameters are provided as a TreeMap (with sorted keys).
+     * @param TreeMap<String, String> formParameterss payment gateway request/response parameters
+     * @param String secretKey shop certificate
+     * @param String signAlgo signature algorithm
+     * @return String
      */
     public static String buildSignature(TreeMap<String, String> formParameters, String
      secretKey, String signAlgo) throws NoSuchAlgorithmException, InvalidKeyException, UnsupportedEncodingException {
@@ -117,17 +110,25 @@ public class Api {
       }else return hmacSha256Base64(message, secretKey);
      }
 
+    /**
+     * Build signature from provided parameters and secret key. Parameters must be in UTF-8.
+     *
+     * @param HttpServletRequest request payment gateway request/response parameters
+     * @param String secretKey shop certificate
+     * @param String signAlgo signature algorithm
+     * @return String
+     */
     public static String buildSignature(HttpServletRequest request, String secretKey, String signAlgo) {
         SortedSet<String> vadsFields = new TreeSet<String>();
         Enumeration<String> paramNames = request.getParameterNames();
-        // Recupere et trie les noms des champs vads_* par ordre alphabetique
+        // Collect and sort the field names vads_* in alphabetical order
         while (paramNames.hasMoreElements()) {
             String paramName = paramNames.nextElement();
             if (paramName.startsWith("vads_")) {
                 vadsFields.add(paramName);
             }
         }
-        // Calcule la signature
+        // Calculate the signature
         StringBuilder sb = new StringBuilder();
         for (String vadsParamName : vadsFields) {
             String vadsParamValue = request.getParameter(vadsParamName);
@@ -154,9 +155,11 @@ public class Api {
                 return "";
             }
     }
-       /**
-       * Actual signing operation.
-       */
+    /** Compute signature using HMAC-SHA-256 algorithm.
+     *  @param String message provided parameters
+     *  @param String secretKey shop certificate
+     *  @return String
+     */
     public static String hmacSha256Base64(String message, String secretKey) throws
      NoSuchAlgorithmException, InvalidKeyException, UnsupportedEncodingException {
       // Prepare hmac sha256 cipher algorithm with provided secretKey
@@ -171,7 +174,11 @@ public class Api {
       // Build and return signature
       return Base64.getEncoder().encodeToString(hmacSha256.doFinal(message.getBytes("UTF-8")));
      }
-    
+
+    /** Compute signature using SHA-1 algorithm.
+     *  @param String message provided parameters
+     *  @return String
+     */
     private static String encode(String src) {
         try {
             MessageDigest md;
@@ -201,27 +208,5 @@ public class Api {
         } else {
             builder.append((char) (c + 'a' - 10));
         }
-    }
-    
-    public static String hmacsha256(String stringToSign , String key ){
-        try {
-        byte[] bytes = encode256 ( key .getBytes( "UTF-8" ), stringToSign .getBytes( "UTF-8" ));
-        return Base64.getEncoder().encodeToString( bytes );
-        } catch (Exception e ){
-        throw new RuntimeException( e );
-        }
-    }
-    
-    private static byte[] encode256(byte[]keyBytes, byte[] text ) throws
-        NoSuchAlgorithmException, InvalidKeyException {
-        Mac hmacSha1 ;
-        try {
-            hmacSha1 = Mac.getInstance ( "HmacSHA256" );
-        } catch (NoSuchAlgorithmException nsae ){
-            hmacSha1 = Mac.getInstance ( "HMAC-SHA-256" );
-        }
-        SecretKeySpec macKey = new SecretKeySpec( keyBytes, "RAW" );
-        hmacSha1.init( macKey );
-        return hmacSha1 .doFinal( text );
     }
 }
