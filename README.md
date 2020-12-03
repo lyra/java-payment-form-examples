@@ -17,7 +17,7 @@ The code presented here is a demonstration of the implementation of the VADS Pay
 ## The first use
 1. Place the files on the same directory, under the root of your web-server
 2. In `src/lyra/vads/config/config.properties`, fill the properties by the actual values of your PayZen account
-3. Access `order.jsp` from your browser.
+3. Access `Order.jsp` from your browser.
 4. Follow the PayZen indications to perform the payment.
 
 ## Note

@@ -1,4 +1,4 @@
-package lyra.vads.sdk;
+package com.lyra.vads.sdk;
 import java.util.Base64;
 import java.util.Hashtable;
 import java.util.Random;
@@ -92,7 +92,7 @@ public class Api {
      * Build signature from provided parameters and secret key. Parameters must be in UTF-8.
      *
      * @param TreeMap<String, String> formParameterss payment gateway request/response parameters
-     * @param String secretKey shop certificate
+     * @param String secretKey shop key
      * @param String signAlgo signature algorithm
      * @return String
      */
@@ -114,7 +114,7 @@ public class Api {
      * Build signature from provided parameters and secret key. Parameters must be in UTF-8.
      *
      * @param HttpServletRequest request payment gateway request/response parameters
-     * @param String secretKey shop certificate
+     * @param String secretKey shop key
      * @param String signAlgo signature algorithm
      * @return String
      */
@@ -157,7 +157,7 @@ public class Api {
     }
     /** Compute signature using HMAC-SHA-256 algorithm.
      *  @param String message provided parameters
-     *  @param String secretKey shop certificate
+     *  @param String secretKey shop key
      *  @return String
      */
     public static String hmacSha256Base64(String message, String secretKey) throws

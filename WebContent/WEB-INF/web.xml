@@ -4,7 +4,7 @@
 
    <servlet>
        <servlet-name>StandardPayment</servlet-name>
-       <servlet-class>lyra.vads.examples.StandardPayment</servlet-class>
+       <servlet-class>com.lyra.vads.examples.StandardPayment</servlet-class>
   </servlet>
    <servlet-mapping>
        <servlet-name>StandardPayment</servlet-name>
@@ -13,7 +13,7 @@
    
    <servlet>
        <servlet-name>MultiPayment</servlet-name>
-       <servlet-class>lyra.vads.examples.MultiPayment</servlet-class>
+       <servlet-class>com.lyra.vads.examples.MultiPayment</servlet-class>
   </servlet>
    <servlet-mapping>
        <servlet-name>MultiPayment</servlet-name>

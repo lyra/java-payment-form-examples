@@ -1,8 +1,8 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@ page import = "java.util.Map" %>
-<%@ page import = "lyra.vads.sdk.Api" %>
-<%@ page import = "lyra.vads.tools.Tools" %>
+<%@ page import = "com.lyra.vads.sdk.Api" %>
+<%@ page import = "com.lyra.vads.tools.Tools" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt"%>
 <%@ taglib uri = "http://java.sun.com/jsp/jstl/functions" prefix = "fn" %>
@@ -34,7 +34,7 @@
 <html lang="${lang}">
 <head>
     <meta charset="utf-8" />
-    <title>PayZen - VADS PAYMENT JAVA</title>
+    <title>Lyra - VADS PAYMENT JAVA</title>
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
     <script defer src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
     <script defer src="https://maxcdn.bootstrapcdn.com/bootstrap/4.1.0/js/bootstrap.min.js"></script>
@@ -45,7 +45,7 @@
 <body>
 <!-- Navigation -->
 <nav class="navbar navbar-expand-lg navbar-dark bg-dark fixed-top">
-  <a class="navbar-brand" href="#">PayZen</a>
+  <a class="navbar-brand" href="#">Lyra</a>
   <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
     <span class="navbar-toggler-icon"></span>
   </button>
@@ -65,7 +65,7 @@
           </div>
       </li>
       <li class="nav-item">
-        <a class="nav-link" target="_blank" href="https://github.com/payzen">Github</a>
+        <a class="nav-link" target="_blank" href="https://github.com/lyra">Github</a>
       </li>
     </ul>
     

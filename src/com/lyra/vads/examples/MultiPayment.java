@@ -1,4 +1,4 @@
-package lyra.vads.examples;
+package com.lyra.vads.examples;
 
 import java.io.IOException;
 import java.security.InvalidKeyException;
@@ -8,9 +8,9 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.Iterator;
 import java.util.Map;
-import java.util.Map.Entry;
 import java.util.Set;
 import java.util.TreeMap;
+import java.util.Map.Entry;
 import java.util.logging.Logger;
 
 import javax.servlet.ServletException;
@@ -19,21 +19,21 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import lyra.vads.sdk.Api;
-import lyra.vads.tools.Tools;
+import com.lyra.vads.sdk.Api;
+import com.lyra.vads.tools.Tools;
 
 /**
- * Servlet implementation class StandardPayment
+ * Servlet implementation class MultiPayment
  */
-@WebServlet("/StandardPayment")
-public class StandardPayment extends HttpServlet {
+@WebServlet("/MultiPayment")
+public class MultiPayment extends HttpServlet {
     private static final long serialVersionUID = 1L;
     private static final Logger logger = Logger.getLogger(Logger.GLOBAL_LOGGER_NAME);
     private String key ;
     /**
      * @see HttpServlet#HttpServlet()
      */
-    public StandardPayment() {
+    public MultiPayment() {
         super();
         try {
             Tools.setupLogger();
@@ -62,6 +62,15 @@ public class StandardPayment extends HttpServlet {
         requestData.put("vads_payment_config", "SINGLE");
         requestData.put("vads_capture_delay", "0");
         
+        double total_in_cents = Integer.valueOf(request.getParameter("vads_amount"));
+        double first = 50;
+        Integer count = 2;
+        Integer period = 30;
+        // Set value to payment_config.
+        String first_in_cents = String.valueOf(Math.round((first / 100) * total_in_cents));
+        
+        requestData.put("vads_payment_config", "MULTI:first=" + first_in_cents + ";count=" + String.valueOf(count) + ";period=" + String.valueOf(period));
+        
         ////Prepare orderinfo
         Map requestParameters = request.getParameterMap();
         Set s = requestParameters.entrySet();
@@ -79,9 +88,10 @@ public class StandardPayment extends HttpServlet {
         
         DateFormat df = new SimpleDateFormat("yyyyMMddHHmmss");
         Date dateobj = new Date();
-        requestData.put("vads_trans_date", df.format(dateobj));
-        requestData.put("vads_trans_id", "123460");
-        
+        String date = df.format(dateobj);
+        requestData.put("vads_trans_date", date);
+        requestData.put("vads_trans_id", date.substring(8));
+
         //iframe mode
         if (Tools.getConfigProperty("action_mode") == "IFRAME") {
             // hide logos below payment fields
@@ -116,4 +126,5 @@ public class StandardPayment extends HttpServlet {
         
         this.getServletContext().getRequestDispatcher("/WEB-INF/form.jsp").forward(request, response);
     }
+
 }

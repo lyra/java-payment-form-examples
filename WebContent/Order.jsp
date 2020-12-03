@@ -1,7 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@ page import="java.util.Date"%>
-<%@ page import="lyra.vads.tools.Tools" %>
+<%@ page import="com.lyra.vads.tools.Tools"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt"%>
 
@@ -26,7 +26,7 @@
 <html lang="${lang}">
 <head>
     <meta charset="utf-8" />
-    <title>PayZen - VADS PAYMENT JAVA</title>
+    <title>Lyra - VADS PAYMENT JAVA</title>
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
     <script defer src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
     <script defer src="https://maxcdn.bootstrapcdn.com/bootstrap/4.1.0/js/bootstrap.min.js"></script>
@@ -37,7 +37,7 @@
 <body>
 <!-- Navigation -->
 <nav class="navbar navbar-expand-lg navbar-dark bg-dark fixed-top">
-  <a class="navbar-brand" href="#">PayZen</a>
+  <a class="navbar-brand" href="#">Lyra</a>
   <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
     <span class="navbar-toggler-icon"></span>
   </button>
@@ -46,7 +46,7 @@
     <ul class="navbar-nav mr-auto">
       <li class="nav-item dropdown show">
 	      <a class="nav-link dropdown-toggle" href="#" id="navbardrop" data-toggle="dropdown">
-	        <fmt:message key="label.contactus" />
+	        <fmt:message key="label.contactus"/>
 	      </a>
 	      <div class="dropdown-menu">
 	          <a class="dropdown-item" target="_blank" href="https://payzen.io/en-EN/support/">English</a>
@@ -57,7 +57,7 @@
 	      </div>
 	  </li>
       <li class="nav-item">
-        <a class="nav-link" target="_blank" href="https://github.com/payzen">Github</a>
+        <a class="nav-link" target="_blank" href="https://github.com/lyra">Github</a>
       </li>
     </ul>
     
@@ -84,7 +84,7 @@
 
     <div class="row">
         <div class="col-lg-12">
-            <h1>VADS PAYMENT PHP</h1>
+            <h1><fmt:message key="label.lyrasolution" /> </h1>
             <p class="lead"><fmt:message key="label.starterkit" /> </p>
             <h2><fmt:message key="label.requirements" /> :</h2>
             <ul>
@@ -141,46 +141,46 @@
                 <button type="button" class="accordion"><fmt:message key="label.clientssettings" /></button>
                 <div class="panel">
                     <input type="hidden" id="vads_language" name="vads_language" value="${lang}">
-                    <label style="width: 10%" for="order_id">order_id</label>
+                    <label style="width: 15%" for="order_id">order_id</label>
                     <input class="forminput" type="text" id="vads_order_id" name="vads_order_id" value="123456">
-                    <label style="width: 60%" for="vads_order_id"><fmt:message key="label.orderdesc" /></label><br>
+                    <label style="width: 55%; vertical-align: middle;"  for="vads_order_id"><fmt:message key="label.orderdesc" /></label><br>
 
-                    <label style="width: 10%" for="vads_cust_id">cust_id</label>
+                    <label style="width: 15%" for="vads_cust_id">cust_id</label>
                     <input class="forminput" type="text" id="vads_cust_id" name="vads_cust_id" value="2380">
-                    <label style="width: 60%" for="vads_cust_id"><fmt:message key="label.custid" /></label><br>
+                    <label style="width: 55%; vertical-align: middle;"  for="vads_cust_id"><fmt:message key="label.custid" /></label><br>
 
 
-                    <label style="width: 10%" for="vads_cust_email">cust_email</label>
+                    <label style="width: 15%" for="vads_cust_email">cust_email</label>
                     <input class="forminput" type="text" id="vads_cust_email" name="vads_cust_email" value="henri@gmail.com">
-                    <label style="width: 60%" for="vads_cust_email"><fmt:message key="label.custemail" /></label><br>
+                    <label style="width: 55%; vertical-align: middle;"  for="vads_cust_email"><fmt:message key="label.custemail" /></label><br>
 
-                    <label style="width: 10%" for="vads_cust_first_name">vads_cust_first_name</label>
+                    <label style="width: 15%" for="vads_cust_first_name">vads_cust_first_name</label>
                     <input class="forminput" type="text" id="vads_cust_first_name" name="vads_cust_first_name" value="Henri">
-                    <label style="width: 60%" for="vads_cust_first_name"><fmt:message key="label.custfirstname" /></label><br>
+                    <label style="width: 55%; vertical-align: middle;"  for="vads_cust_first_name"><fmt:message key="label.custfirstname" /></label><br>
 
-                    <label style="width: 10%" for="vads_cust_last_name">vads_cust_last_name</label>
+                    <label style="width: 15%" for="vads_cust_last_name">vads_cust_last_name</label>
                     <input class="forminput" type="text" id="vads_cust_last_name" name="vads_cust_last_name" value="Durand">
-                    <label style="width: 60%" for="vads_cust_last_name"><fmt:message key="label.custlastname" /></label><br>
+                    <label style="width: 55%; vertical-align: middle;"  for="vads_cust_last_name"><fmt:message key="label.custlastname" /></label><br>
 
-                    <label style="width: 10%" for="vads_cust_address">vads_cust_address</label>
+                    <label style="width: 15%" for="vads_cust_address">vads_cust_address</label>
                     <input class="forminput" type="text" id="vads_cust_address" name="vads_cust_address" value="Bd Paul Pïcot">
-                    <label style="width: 60%" for="vads_cust_address"><fmt:message key="label.custaddress" /></label><br>
+                    <label style="width: 55%; vertical-align: middle;"  for="vads_cust_address"><fmt:message key="label.custaddress" /></label><br>
 
-                    <label style="width: 10%" for="vads_cust_city">vads_cust_city</label>
+                    <label style="width: 15%" for="vads_cust_city">vads_cust_city</label>
                     <input class="forminput" type="text" id="vads_cust_city" name="vads_cust_city" value="TOULON">
-                    <label style="width: 60%" for="vads_cust_city"><fmt:message key="label.custcity" /></label><br>
+                    <label style="width: 55%; vertical-align: middle;"  for="vads_cust_city"><fmt:message key="label.custcity" /></label><br>
 
-                    <label style="width: 10%" for="vads_cust_zip">vads_cust_zip</label>
+                    <label style="width: 15%" for="vads_cust_zip">vads_cust_zip</label>
                     <input class="forminput" type="text" id="vads_cust_zip" name="vads_cust_zip" value="83200">
-                    <label style="width: 60%" for="vads_cust_zip"><fmt:message key="label.custzip" /></label><br>
+                    <label style="width: 55%; vertical-align: middle;"  for="vads_cust_zip"><fmt:message key="label.custzip" /></label><br>
 
-                    <label style="width: 10%" for="vads_cust_country">vads_cust_country</label>
+                    <label style="width: 15%" for="vads_cust_country">vads_cust_country</label>
                     <input class="forminput" type="text" id="vads_cust_country" name="vads_cust_country" value="FR">
-                    <label style="width: 60%" for="vads_cust_country"><fmt:message key="label.custcountry" /></label><br>
+                    <label style="width: 55%; vertical-align: middle;"  for="vads_cust_country"><fmt:message key="label.custcountry" /></label><br>
 
-                    <label style="width: 10%" for="vads_cust_phone">vads_cust_phone</label>
+                    <label style="width: 15%" for="vads_cust_phone">vads_cust_phone</label>
                     <input class="forminput" type="text" id="vads_cust_phone" name="vads_cust_phone" value="06002822672">
-                    <label style="width: 60%" for="vads_cust_phone"><fmt:message key="label.custphone" /></label><br>
+                    <label style="width: 55%; vertical-align: middle;"  for="vads_cust_phone"><fmt:message key="label.custphone" /></label><br>
 
                 </div>
 

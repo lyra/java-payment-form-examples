@@ -1,4 +1,4 @@
-package lyra.vads.tools;
+package com.lyra.vads.tools;
 
 import java.io.File;
 import java.io.IOException;
@@ -13,7 +13,7 @@ import java.util.logging.SimpleFormatter;
 
 import javax.servlet.http.HttpServletRequest;
 
-import lyra.vads.sdk.Api;
+import com.lyra.vads.sdk.Api;
 
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
@@ -22,6 +22,7 @@ import java.util.Set;
 import java.util.TreeMap;
 
 public class Tools {
+    static final String CONF_PATH = "/home/atlasshd200/git/java-payment-form-examples55555555555/src/com/lyra/vads/config/config.properties";
     static private FileHandler fileTxt;
     static private SimpleFormatter formatterTxt;
 
@@ -58,7 +59,7 @@ public class Tools {
     public static String getConfigProperty(String param) {
         Properties prop=new Properties();
         try {
-            FileInputStream ip= new FileInputStream("D:\\Developpement\\workspace-plugins\\example\\java-payment-form-examples\\src\\lyra\\vads\\config\\config.properties");
+            FileInputStream ip= new FileInputStream(CONF_PATH);
             prop.load(ip);
             return prop.getProperty(param).trim();
         } catch (FileNotFoundException e) {
@@ -73,7 +74,7 @@ public class Tools {
     public static Set<Object> getAllKeys(){
         Properties prop=new Properties();
         try {
-            FileInputStream ip= new FileInputStream("D:\\Developpement\\workspace-plugins\\example\\java-payment-form-examples\\src\\lyra\\vads\\config\\config.properties");
+            FileInputStream ip= new FileInputStream(CONF_PATH);
             prop.load(ip);
             Set<Object> keys = prop.keySet();
             return keys;
