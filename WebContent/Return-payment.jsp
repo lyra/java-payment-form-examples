@@ -21,7 +21,7 @@
     <c:set var="authResult" value="label.vads_auth_result_${(not empty param.vads_auth_result) ? param.vads_auth_result : 'none'}" scope="session" />
     <c:set var="result" value="label.${(not empty param.vads_result) ? param.vads_result : 'none'}" scope="session" />
     
-    <c:set var="paymentConfig" value="${(fn:contains(param.vads_payment_config,'SINGLE') && not empty param.vads_payment_config) ? 'label.standard' : (fn:contains(param.vads_payment_config,'SINGLE')) ? 'label.multi' : '' }" scope="session" />
+    <c:set var="paymentConfig" value="${(fn:contains(param.vads_payment_config,'SINGLE') && not empty param.vads_payment_config) ? 'label.standard' : (fn:contains(param.vads_payment_config,'MULTI')) ? 'label.multi' : '' }" scope="session" />
     
     <c:set var="warrantyResult" value="label.vads_warranty_result_${(not empty param.vads_warranty_result) ? fn:toLowerCase(param.vads_warranty_result) : 'x'}" scope="session" />
     <c:set var="threedsStatus" value="label.vads_threeds_status_${(not empty param.vads_threeds_status) ? fn:toLowerCase(param.vads_threeds_status) : 'x'}" scope="session" />
@@ -99,51 +99,51 @@
             <div class="panel">
                     <label style="width: 20%" for="vads_trans_status">vads_trans_status</label>
                     <input class="forminput" type="text" id="vads_trans_status" name="vads_trans_status" value="<%=request.getParameter("vads_trans_status")%>"  readonly>
-                    <label style="width: 55%" for="vads_trans_status"><fmt:message key="label.vads_trans_status" />  : <fmt:message key="${transStatus}" />  </label><br>
+                    <label style="width: 55%; vertical-align: middle;" for="vads_trans_status"><fmt:message key="label.vads_trans_status" />  : <fmt:message key="${transStatus}" />  </label><br>
                     
                     <label style="width: 20%" for="vads_result">vads_result</label>
                     <input class="forminput" type="text" id="vads_result" name="vads_result" value="<%=request.getParameter("vads_result")%>"  readonly>
-                    <label style="width: 55%" for="vads_result"><fmt:message key="label.result" />  : <fmt:message key="${result}" /> </label><br>
+                    <label style="width: 55%; vertical-align: middle;" for="vads_result"><fmt:message key="label.result" />  : <fmt:message key="${result}" /> </label><br>
 
                     <label style="width: 20%" for="vads_trans_id">vads_trans_id</label>
                     <input class="forminput" type="text" id="vads_trans_id" name="vads_trans_id" value="<%=request.getParameter("vads_trans_id")%>"  readonly>
-                    <label style="width: 55%" for="vads_trans_id"><fmt:message key="label.vads_trans_id" /></label><br>
+                    <label style="width: 55%; vertical-align: middle;" for="vads_trans_id"><fmt:message key="label.vads_trans_id" /></label><br>
 
                     <label style="width: 20%" for="vads_amount">vads_amount</label>
                     <input class="forminput" type="text" id="vads_amount" name="vads_amount" value="<%=request.getParameter("vads_amount")%>" readonly>
-                    <label style="width: 55%" for="vads_amount"><fmt:message key="label.vads_amount" /> </label><br>
+                    <label style="width: 55%; vertical-align: middle;" for="vads_amount"><fmt:message key="label.vads_amount" /> </label><br>
 
                     <label style="width: 20%" for="vads_effective_amount">vads_effective_amount</label>
                     <input class="forminput" type="text" id="vads_effective_amount" name="vads_effective_amount" value="<%=request.getParameter("vads_effective_amount")%>" readonly>
-                    <label style="width: 55%" for="vads_effective_amount"><fmt:message key="label.vads_effective_amount" /> <fmt:message key="label.vads_effective_amount_desc" /></label><br>
+                    <label style="width: 55%; vertical-align: middle;" for="vads_effective_amount"><fmt:message key="label.vads_effective_amount" /> <fmt:message key="label.vads_effective_amount_desc" /></label><br>
 
                     <label style="width: 20%" for="vads_payment_config">vads_payment_config</label>
                     <input class="forminput" type="text" id="vads_payment_config" name="vads_payment_config" value="<%=request.getParameter("vads_payment_config")%>" readonly>
-                    <label style="width: 55%" for="vads_payment_config"><fmt:message key="label.vads_payment_config" />  : <fmt:message key="${paymentConfig}" /> </label><br>
+                    <label style="width: 55%; vertical-align: middle;" for="vads_payment_config"><fmt:message key="label.vads_payment_config" />  : <fmt:message key="${paymentConfig}" /> </label><br>
 
                     <label style="width: 20%" for="vads_sequence_number">vads_sequence_number</label>
                     <input class="forminput" type="text" id="vads_sequence_number" name="vads_sequence_number" value="<%=request.getParameter("vads_sequence_number")%>" readonly>
-                    <label style="width: 55%" for="vads_sequence_number"><fmt:message key="label.vads_sequence_number" /></label><br>
+                    <label style="width: 55%; vertical-align: middle;" for="vads_sequence_number"><fmt:message key="label.vads_sequence_number" /></label><br>
 
                     <label style="width: 20%" for="vads_auth_result">vads_auth_result</label>
                     <input class="forminput" type="text" id="vads_auth_result" name="vads_auth_result" value="<%=request.getParameter("vads_auth_result")%>" readonly>
-                    <label style="width: 55%" for="vads_auth_result"><fmt:message key="label.vads_auth_result" />  : <fmt:message key="${authResult}" /></label><br>
+                    <label style="width: 55%; vertical-align: middle;" for="vads_auth_result"><fmt:message key="label.vads_auth_result" />  : <fmt:message key="${authResult}" /></label><br>
 
                     <label style="width: 20%" for="vads_warranty_result">vads_warranty_result</label>
                     <input class="forminput" type="text" id="vads_warranty_result" name="vads_warranty_result" value="<%=request.getParameter("vads_warranty_result")%>" readonly>
-                    <label style="width: 55%" for="vads_warranty_result"><fmt:message key="label.vads_warranty_result" />  : <fmt:message key="${warrantyResult}" /></label><br>
+                    <label style="width: 55%; vertical-align: middle;" for="vads_warranty_result"><fmt:message key="label.vads_warranty_result" />  : <fmt:message key="${warrantyResult}" /></label><br>
 
                     <label style="width: 20%" for="vads_threeds_status">vads_threeds_status</label>
                     <input class="forminput" type="text" id="vads_threeds_status" name="vads_threeds_status" value="<%=request.getParameter("vads_threeds_status")%>" readonly>
-                    <label style="width: 55%" for="vads_threeds_status"><fmt:message key="label.vads_threeds_status" />  : <fmt:message key="${threedsStatus}" /></label><br>
+                    <label style="width: 55%; vertical-align: middle;" for="vads_threeds_status"><fmt:message key="label.vads_threeds_status" />  : <fmt:message key="${threedsStatus}" /></label><br>
 
                     <label style="width: 20%" for="vads_capture_delay">vads_capture_delay</label>
                     <input class="forminput" type="text" id="vads_capture_delay" name="vads_capture_delay" value="<%=request.getParameter("vads_capture_delay")%>" readonly>
-                    <label style="width: 55%" for="vads_capture_delay"><fmt:message key="label.vads_capture_delay" />  : ${captureDelay} <fmt:message key="label.days" /> </label><br>
+                    <label style="width: 55%; vertical-align: middle;" for="vads_capture_delay"><fmt:message key="label.vads_capture_delay" />  : ${captureDelay} <fmt:message key="label.days" /> </label><br>
 
                     <label style="width: 20%" for="vads_validation_mode">vads_validation_mode</label>
                     <input class="forminput" type="text" id="vads_validation_mode" name="vads_validation_mode" value="<%=request.getParameter("vads_validation_mode")%>" readonly>
-                    <label style="width: 55%" for="vads_validation_mode"><fmt:message key="label.vads_validation_mode" />  : <fmt:message key="${validationMode}" /></label><br>
+                    <label style="width: 55%; vertical-align: middle;" for="vads_validation_mode"><fmt:message key="label.vads_validation_mode" />  : <fmt:message key="${validationMode}" /></label><br>
             </div>
             <button type="button" class="accordion"><fmt:message key="label.allReceivedData" /></button>
             <div class="panel">

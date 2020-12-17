@@ -163,7 +163,7 @@
                     <label style="width: 55%; vertical-align: middle;"  for="vads_cust_last_name"><fmt:message key="label.custlastname" /></label><br>
 
                     <label style="width: 15%" for="vads_cust_address">vads_cust_address</label>
-                    <input class="forminput" type="text" id="vads_cust_address" name="vads_cust_address" value="Bd Paul Pïcot">
+                    <input class="forminput" type="text" id="vads_cust_address" name="vads_cust_address" value="Bd Paul Picot">
                     <label style="width: 55%; vertical-align: middle;"  for="vads_cust_address"><fmt:message key="label.custaddress" /></label><br>
 
                     <label style="width: 15%" for="vads_cust_city">vads_cust_city</label>

@@ -22,7 +22,7 @@ import java.util.Set;
 import java.util.TreeMap;
 
 public class Tools {
-    static final String CONF_PATH = "/home/atlasshd200/git/java-payment-form-examples55555555555/src/com/lyra/vads/config/config.properties";
+    static final String CONF_PATH = "";
     static private FileHandler fileTxt;
     static private SimpleFormatter formatterTxt;
 
