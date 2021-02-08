@@ -1,3 +1,6 @@
+.project
+.buildpath
+/.settings/
 /build/
 /WEB-INF/
 /target/
