@@ -1,31 +1,26 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <web-app xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="http://java.sun.com/xml/ns/javaee" xsi:schemaLocation="http://java.sun.com/xml/ns/javaee http://java.sun.com/xml/ns/javaee/web-app_3_0.xsd" id="WebApp_ID" version="3.0">
-  <display-name>Exemple-implementation-payment-form</display-name>
+    <display-name>Java payment form examples for Lyra gateways.</display-name>
 
-   <servlet>
-       <servlet-name>StandardPayment</servlet-name>
-       <servlet-class>com.lyra.vads.examples.StandardPayment</servlet-class>
-  </servlet>
-   <servlet-mapping>
-       <servlet-name>StandardPayment</servlet-name>
-       <url-pattern>/standardpayment</url-pattern>
-   </servlet-mapping>
-   
-   <servlet>
-       <servlet-name>MultiPayment</servlet-name>
-       <servlet-class>com.lyra.vads.examples.MultiPayment</servlet-class>
-  </servlet>
-   <servlet-mapping>
-       <servlet-name>MultiPayment</servlet-name>
-       <url-pattern>/multipayment</url-pattern>
-   </servlet-mapping>
-   
-   <servlet>
-       <servlet-name>Test</servlet-name>
-       <servlet-class>Test</servlet-class>
-  </servlet>
-   <servlet-mapping>
-       <servlet-name>Test</servlet-name>
-       <url-pattern>/test</url-pattern>
-   </servlet-mapping>
+    <welcome-file-list>
+        <welcome-file>order.jsp</welcome-file>
+    </welcome-file-list>
+
+    <servlet>
+        <servlet-name>StandardPayment</servlet-name>
+        <servlet-class>com.lyra.examples.form.servlet.StandardPayment</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>StandardPayment</servlet-name>
+        <url-pattern>/standardpayment</url-pattern>
+    </servlet-mapping>
+
+    <servlet>
+        <servlet-name>MultiPayment</servlet-name>
+        <servlet-class>com.lyra.examples.form.servlet.MultiPayment</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>MultiPayment</servlet-name>
+        <url-pattern>/multipayment</url-pattern>
+    </servlet-mapping>
 </web-app>

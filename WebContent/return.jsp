@@ -1,35 +1,36 @@
-<%@ page language="java" contentType="text/html; charset=UTF-8"
-    pageEncoding="UTF-8"%>
-<%@ page import = "java.util.Map" %>
-<%@ page import = "com.lyra.vads.sdk.Api" %>
-<%@ page import = "com.lyra.vads.tools.Tools" %>
-<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
-<%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt"%>
-<%@ taglib uri = "http://java.sun.com/jsp/jstl/functions" prefix = "fn" %>
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 
-<c:set var="lang" value="${not empty request.vads_language ? request.vads_language : not empty lang  ? lang :
-                        pageContext.request.locale}" scope="session" />
+<%@ page import = "java.util.Map" %>
+<%@page import="com.lyra.examples.form.utils.GatewayUtils"%>
+
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt" %>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/functions" prefix = "fn" %>
+
+<c:set var="lang" value="${not empty request.vads_language ? request.vads_language : not empty lang  ? lang : pageContext.request.locale}" scope="session" />
 <fmt:requestEncoding value="UTF-8" />
 <fmt:setLocale value="${lang}" />
-<fmt:setBundle basename="messages"/>
+<fmt:setBundle basename="i18n/messages"/>
 
-<% Map<String, String[]> parameters = request.getParameterMap();%>
-<% boolean authentified = Tools.isAuthentified(request);%>
-<% if(authentified==true){%>
+<%
+Map<String, String[]> parameters = request.getParameterMap();
+boolean authentified = GatewayUtils.isAuthentified(request);
+if (authentified) {
+%>
     <c:set var="authStatus" value="label.validsign" scope="session" />
     <c:set var="transStatus" value="label.${(not empty param.vads_trans_status) ? fn:toLowerCase(param.vads_trans_status) : 'none'}" scope="session" />
     <c:set var="authResult" value="label.vads_auth_result_${(not empty param.vads_auth_result) ? param.vads_auth_result : 'none'}" scope="session" />
     <c:set var="result" value="label.${(not empty param.vads_result) ? param.vads_result : 'none'}" scope="session" />
-    
+
     <c:set var="paymentConfig" value="${(fn:contains(param.vads_payment_config,'SINGLE') && not empty param.vads_payment_config) ? 'label.standard' : (fn:contains(param.vads_payment_config,'MULTI')) ? 'label.multi' : '' }" scope="session" />
-    
+
     <c:set var="warrantyResult" value="label.vads_warranty_result_${(not empty param.vads_warranty_result) ? fn:toLowerCase(param.vads_warranty_result) : 'x'}" scope="session" />
     <c:set var="threedsStatus" value="label.vads_threeds_status_${(not empty param.vads_threeds_status) ? fn:toLowerCase(param.vads_threeds_status) : 'x'}" scope="session" />
     <c:set var="captureDelay" value="${(not empty param.vads_capture_delay) ? param.vads_capture_delay : ''}" scope="session" />
     <c:set var="validationMode" value="label.vads_validation_mode_${(not empty param.vads_validation_mode) ? fn:toLowerCase(param.vads_validation_mode) : 'x'}" scope="session" />
-<% }else{%>
+<% } else { %>
     <c:set var="authStatus" value="label.invalidsigndesc" scope="session" />
-<% }%>
+<% } %>
 <!DOCTYPE html>
 <html lang="${lang}">
 <head>
@@ -68,20 +69,19 @@
         <a class="nav-link" target="_blank" href="https://github.com/lyra">Github</a>
       </li>
     </ul>
-    
+
     <div class="navbar-nav">
-        <li class="nav-item">
-            <a class="nav-link" href="#">${lang}</a>
-        </li>
+        <ul class="navbar-nav mr-auto">
+            <li class="nav-item">
+                <a class="nav-link" href="#">${lang}</a>
+            </li>
+        </ul>
     </div>
-    
-    
   </div>
 </nav>
 
 <!-- Page Content -->
 <div class="container">
-
     <div class="row">
         <div class="col-lg-12">
             <h1><fmt:message key="label.formexampleresponse" /> </h1>
@@ -94,13 +94,13 @@
                 </tr>
             </table>
             </div>
-            <% if(authentified==true){%>
+            <% if (authentified) { %>
             <button type="button" class="accordion"><fmt:message key="label.responsessettings" /></button>
             <div class="panel">
                     <label style="width: 20%" for="vads_trans_status">vads_trans_status</label>
                     <input class="forminput" type="text" id="vads_trans_status" name="vads_trans_status" value="<%=request.getParameter("vads_trans_status")%>"  readonly>
                     <label style="width: 55%; vertical-align: middle;" for="vads_trans_status"><fmt:message key="label.vads_trans_status" />  : <fmt:message key="${transStatus}" />  </label><br>
-                    
+
                     <label style="width: 20%" for="vads_result">vads_result</label>
                     <input class="forminput" type="text" id="vads_result" name="vads_result" value="<%=request.getParameter("vads_result")%>"  readonly>
                     <label style="width: 55%; vertical-align: middle;" for="vads_result"><fmt:message key="label.result" />  : <fmt:message key="${result}" /> </label><br>
@@ -155,23 +155,22 @@
             </div>
             <% }%>
             <br />
-            <h1><fmt:message key="label.paymentresponseanalysis" /> </h1>
+            <h1><fmt:message key="label.paymentresponseanalysis" /></h1>
             <div id="Info">
-                    <strong><fmt:message key="label.ipn" /> </strong><br />
-                    <p><fmt:message key="label.ipndesc" /> </p>
+                <strong><fmt:message key="label.ipn" /></strong><br />
+                <p><fmt:message key="label.ipndesc" /></p>
 
-                    <strong><fmt:message key="label.returnurl" /> </strong><br />
-                    <p><fmt:message key="label.clientcomesback" /> </p>
-                    <p><fmt:message key="label.formreturndesc" /> </p>
+                <strong><fmt:message key="label.returnurl" /></strong><br />
+                <p><fmt:message key="label.clientcomesback" /></p>
+                <p><fmt:message key="label.formreturndesc" /></p>
             </div>
 
-            <h2><fmt:message key="label.findhelp" /> </h2>
+            <h2><fmt:message key="label.findhelp" /></h2>
             <p><strong><fmt:message key="label.supportrecommends" /> </strong> <a href="https://payzen.io" target="_blank"> payzen.io</a></p>
         </div>
     </div>
 </div>
 
 <script type="text/javascript" src="assets/js/script.js"></script>
-
 </body>
 </html>
