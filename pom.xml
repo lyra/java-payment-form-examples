@@ -6,7 +6,7 @@
     <artifactId>java-payment-form-examples</artifactId>
     <version>1.0.0-SNAPSHOT</version>
     <packaging>war</packaging>
-    <description>Java payment form examples for Lyra gateways.</description>
+    <description>Java payment form examples for Lyra gateway.</description>
 
     <properties>
         <maven.compiler.source>1.8</maven.compiler.source>
@@ -14,10 +14,10 @@
     </properties>
 
     <build>
-        <sourceDirectory>src</sourceDirectory>
+        <sourceDirectory>src/main/java</sourceDirectory>
         <resources>
             <resource>
-                <directory>src</directory>
+                <directory>src/main/resources</directory>
                 <excludes>
                     <exclude>**/*.java</exclude>
                 </excludes>
