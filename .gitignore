@@ -1,7 +1,6 @@
 .project
 .buildpath
-/.settings/
 .tern-project
+/.settings/
 /build/
-/WEB-INF/
 /target/
