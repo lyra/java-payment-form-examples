@@ -60,6 +60,7 @@ public class StandardPayment extends HttpServlet {
         try {
             Integer.valueOf(request.getParameter("vads_amount"));
         } catch (NumberFormatException e) {
+            // Manage error here.
             LOGGER.log(Level.SEVERE, e, () -> "Invalid received amount: " + request.getParameter("vads_amount"));
         }
 
@@ -74,8 +75,7 @@ public class StandardPayment extends HttpServlet {
         }
 
         DateFormat df = new SimpleDateFormat("yyyyMMddHHmmss");
-        String date = df.format(new Date());
-        requestData.put("vads_trans_date", date);
+        requestData.put("vads_trans_date", df.format(new Date()));
         requestData.put("vads_trans_id", GatewayUtils.generateTransId());
 
         // Iframe mode.
@@ -94,7 +94,8 @@ public class StandardPayment extends HttpServlet {
 
         String signature = GatewayUtils.buildSignature(requestData, key, AppUtils.getConfigProperty("sign_algo"));
         if (signature == null) {
-            LOGGER.severe("Unable to compute request signature.");
+            // Manage error here.
+            LOGGER.severe("Unable to compute the request signature.");
         }
 
         request.setAttribute("signature", signature);
@@ -109,6 +110,7 @@ public class StandardPayment extends HttpServlet {
         try {
             this.getServletContext().getRequestDispatcher("/WEB-INF/form.jsp").forward(request, response);
         } catch (ServletException | IOException e) {
+            // Manage error here.
             LOGGER.log(Level.SEVERE, "Unable to load redirection form.", e);
         }
     }

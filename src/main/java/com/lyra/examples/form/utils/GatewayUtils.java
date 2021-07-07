@@ -8,13 +8,10 @@ import java.security.NoSuchAlgorithmException;
 import java.security.SecureRandom;
 import java.util.Base64;
 import java.util.Enumeration;
-import java.util.HashMap;
-import java.util.Map;
 import java.util.Map.Entry;
 import java.util.Random;
 import java.util.SortedMap;
-import java.util.SortedSet;
-import java.util.TreeSet;
+import java.util.TreeMap;
 import java.util.logging.Logger;
 
 import javax.crypto.Mac;
@@ -29,40 +26,9 @@ public class GatewayUtils {
     private static final String ALGO_SHA_256 = "SHA-256";
     private static final Charset ENCODING = StandardCharsets.UTF_8;
 
+    private static final Random RANDOM = new SecureRandom();
+
     private static final Logger logger = Logger.getLogger(Logger.GLOBAL_LOGGER_NAME);
-
-    /**
-     * Returns an array of languages accepted by the payment gateway.
-     *
-     * @return Map<String, String>
-     */
-    public static Map<String, String> getSupportedLanguages() {
-        Map<String, String> languages = new HashMap<>();
-        languages.put("de", "German");
-        languages.put("en", "English");
-        languages.put("zh", "Chinese");
-        languages.put("es", "Spanish");
-        languages.put("fr", "French");
-        languages.put("it", "Italian");
-        languages.put("ja", "Japanese");
-        languages.put("nl", "Dutch");
-        languages.put("pl", "Polish");
-        languages.put("pt", "Portuguese");
-        languages.put("ru", "Russian");
-        languages.put("sv", "Swedish");
-        languages.put("tr", "Turkish");
-        return languages;
-    }
-
-    /**
-     * Returns true if the entered language (ISO code) is supported.
-     *
-     * @param String lang
-     * @return boolean
-     */
-    public static boolean isSupportedLanguage(String lang) {
-        return getSupportedLanguages().containsKey(lang);
-    }
 
     /**
      * Generate a random transaction ID from 1 to 899999.
@@ -70,8 +36,7 @@ public class GatewayUtils {
      * @return int the generated transaction ID
      */
     public static String generateTransId() {
-        Random r = new SecureRandom();
-        return String.format("%06d", r.ints(1, 899999 + 1).findFirst().getAsInt());
+        return String.format("%06d", RANDOM.ints(1, 899999 + 1).findFirst().getAsInt());
     }
 
     public static boolean isAuthentified(HttpServletRequest request) {
@@ -108,7 +73,7 @@ public class GatewayUtils {
         String message = String.join("+", formParameters.values());
         message += "+" + secretKey;
 
-        // Sign
+        // Sign.
         switch (signAlgo) {
         case ALGO_SHA_1:
             try {
@@ -139,61 +104,24 @@ public class GatewayUtils {
      * Build signature from provided parameters and secret key. Parameters must be
      * encoded in UTF-8.
      *
-     * @param HttpServletRequest request payment gateway request/response parameters
+     * @param HttpServletRequest payment gateway parameters
      * @param String             secretKey shop key
      * @param String             signAlgo signature algorithm
      * @return String
      */
     public static String buildSignature(HttpServletRequest request, String secretKey, String signAlgo) {
-        SortedSet<String> vadsFields = new TreeSet<>();
-        Enumeration<String> paramNames = request.getParameterNames();
+        SortedMap<String, String> recievedFields = new TreeMap<>();
 
         // Collect and sort field names starting with vads_ in alphabetical order.
+        Enumeration<String> paramNames = request.getParameterNames();
         while (paramNames.hasMoreElements()) {
             String paramName = paramNames.nextElement();
             if (paramName.startsWith("vads_")) {
-                vadsFields.add(paramName);
+                recievedFields.put(paramName, request.getParameter(paramName));
             }
         }
 
-        // Calculate the signature
-        StringBuilder sb = new StringBuilder();
-        for (String vadsParamName : vadsFields) {
-            String vadsParamValue = request.getParameter(vadsParamName);
-            if (vadsParamValue != null) {
-                sb.append(vadsParamValue);
-            }
-
-            sb.append("+");
-        }
-
-        sb.append(secretKey);
-        String message = sb.toString();
-
-        switch (signAlgo) {
-        case ALGO_SHA_1:
-            try {
-                return sha1Hex(message);
-            } catch (NoSuchAlgorithmException e) {
-                logger.severe("SHA-1 algorithm is not avilable: " + e.getMessage());
-            }
-
-            break;
-
-        case ALGO_SHA_256:
-            try {
-                return hmacSha256Base64(message, secretKey);
-            } catch (InvalidKeyException | NoSuchAlgorithmException e) {
-                logger.severe("An error occurred when trying to sign with HMAC-SHA-256: " + e.getMessage());
-            }
-
-            break;
-
-        default:
-            throw new IllegalArgumentException("Algorithm " + signAlgo + " is not supported.");
-        }
-
-        return null;
+        return buildSignature(recievedFields, secretKey, signAlgo);
     }
 
     /**

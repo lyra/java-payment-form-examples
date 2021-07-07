@@ -15,6 +15,8 @@ public class AppUtils {
     private static final String CONF_PATH = "config.properties";
     private static final Properties CONF_PROPERTIES = new Properties();
 
+    private static final String LOG_FILE_PATH = "payment-logs.log";
+
     private static final Logger LOGGER = Logger.getLogger(AppUtils.class.getName());
 
     private AppUtils() {
@@ -38,7 +40,7 @@ public class AppUtils {
                 logDir.mkdir();
             }
 
-            FileHandler file = new FileHandler("logs/vads_" + "log.log");
+            FileHandler file = new FileHandler("logs/" + LOG_FILE_PATH);
 
             // Set a text formatter.
             file.setFormatter(new SimpleFormatter());

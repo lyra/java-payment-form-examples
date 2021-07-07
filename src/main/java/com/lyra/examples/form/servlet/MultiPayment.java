@@ -61,6 +61,7 @@ public class MultiPayment extends HttpServlet {
         try {
             totalInCents = Integer.valueOf(request.getParameter("vads_amount"));
         } catch (NumberFormatException e) {
+            // Manage error here.
             LOGGER.log(Level.SEVERE, e, () -> "Invalid received amount: " + request.getParameter("vads_amount"));
         }
 
@@ -105,6 +106,7 @@ public class MultiPayment extends HttpServlet {
 
         String signature = GatewayUtils.buildSignature(requestData, key, AppUtils.getConfigProperty("sign_algo"));
         if (signature == null) {
+            // Manage error here.
             LOGGER.severe("Unable to compute request signature.");
         }
 
@@ -120,6 +122,7 @@ public class MultiPayment extends HttpServlet {
         try {
             this.getServletContext().getRequestDispatcher("/WEB-INF/form.jsp").forward(request, response);
         } catch (ServletException | IOException e) {
+            // Manage error here.
             LOGGER.log(Level.SEVERE, "Unable to load redirection form.", e);
         }
     }

@@ -2,8 +2,8 @@
 
 <%@ page import="com.lyra.examples.form.utils.AppUtils" %>
 
-<%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt" %>
 
 <c:set var="lang" value="${not empty parameters.vads_language ? parameters.vads_language : 'en'}" scope="session" />
 <fmt:setLocale value="${lang}" />
