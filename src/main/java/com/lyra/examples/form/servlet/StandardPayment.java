@@ -37,18 +37,17 @@ public class StandardPayment extends HttpServlet {
     }
 
     /**
-     * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse
-     *      response)
+     * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
      */
     @Override
-    protected void doPost(HttpServletRequest request, HttpServletResponse response)
-            throws ServletException, IOException {
+    protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         TreeMap<String, String> requestData = new TreeMap<>();
 
         // Prepare config parameters
         requestData.put("vads_site_id", AppUtils.getConfigProperty("site_id"));
         requestData.put("vads_ctx_mode", AppUtils.getConfigProperty("ctx_mode"));
         requestData.put("vads_return_mode", AppUtils.getConfigProperty("return_mode"));
+        requestData.put("vads_url_cancel", AppUtils.getConfigProperty("url_cancel"));
         requestData.put("vads_url_return", AppUtils.getConfigProperty("url_return"));
         requestData.put("vads_action_mode", AppUtils.getConfigProperty("action_mode"));
 
@@ -88,8 +87,7 @@ public class StandardPayment extends HttpServlet {
             requestData.put("vads_redirect_error_timeout", "0");
         }
 
-        String key = "PRODUCTION".equals(AppUtils.getConfigProperty("ctx_mode"))
-                ? AppUtils.getConfigProperty("key_prod")
+        String key = "PRODUCTION".equals(AppUtils.getConfigProperty("ctx_mode")) ? AppUtils.getConfigProperty("key_prod")
                 : AppUtils.getConfigProperty("key_test");
 
         String signature = GatewayUtils.buildSignature(requestData, key, AppUtils.getConfigProperty("sign_algo"));

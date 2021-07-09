@@ -1,8 +1,7 @@
 @charset "UTF-8";
 
 body {
-    padding-top: 120px;
-    padding-bottom: 8em;
+    padding: 75px 0;
 }
 
 .form-control {
@@ -29,9 +28,17 @@ body {
 
 /* Style the accordion panel. Note: hidden by default. */
 .panel {
-    padding: 0 18px;
+    padding: 10px 18px;
     background-color: white;
     overflow: hidden;
+}
+
+.table {
+    margin-bottom: 0;
+}
+
+.table tr th.left {
+    width: 25%;
 }
 
 .forminput[type=text] {

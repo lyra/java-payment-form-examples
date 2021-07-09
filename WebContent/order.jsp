@@ -7,7 +7,7 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt" %>
 
 <c:set var="lang" value="${not empty param.lang ? param.lang : not empty lang ? lang : pageContext.request.locale}" scope="session" />
-<fmt:requestEncoding value="UTF-8" />
+
 <fmt:requestEncoding value="UTF-8" />
 <fmt:setLocale value="${lang}" />
 <fmt:setBundle basename="i18n/messages" />
@@ -25,38 +25,26 @@ if (mode.equals("IFRAME")) {
 <!DOCTYPE html>
 <html lang="${lang}">
 <head>
-    <meta charset="utf-8" />
-    <title>Lyra - Payment form examples</title>
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
-    <script defer src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
-    <script defer src="https://maxcdn.bootstrapcdn.com/bootstrap/4.1.0/js/bootstrap.min.js"></script>
-    <script defer src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.0/umd/popper.min.js"></script>
+    <title><fmt:message key="order_page_title" /></title>
 
-    <!-- Custom CSS -->
-    <link rel="stylesheet" type="text/css" href="assets/css/style.css">
+    <link href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js" defer></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.1.0/js/bootstrap.min.js" defer></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.0/umd/popper.min.js" defer></script>
+
+    <!-- Custom styles -->
+    <link href="assets/css/style.css" rel="stylesheet" type="text/css">
 </head>
 <body>
 <nav class="navbar navbar-expand-lg navbar-dark bg-dark fixed-top">
-  <a class="navbar-brand" href="#">Lyra</a>
+  <a class="navbar-brand" href="">Lyra</a>
   <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
     <span class="navbar-toggler-icon"></span>
   </button>
 
   <div class="collapse navbar-collapse" id="navbarSupportedContent">
     <ul class="navbar-nav mr-auto">
-      <li class="nav-item dropdown show">
-        <a class="nav-link dropdown-toggle" href="#" id="navbardrop" data-toggle="dropdown">
-          <fmt:message key="label.contactus"/>
-        </a>
-        <div class="dropdown-menu">
-          <a class="dropdown-item" target="_blank" href="https://payzen.io/en-EN/support/">English</a>
-          <a class="dropdown-item" target="_blank" href="https://payzen.io/fr-FR/support/">French</a>
-          <a class="dropdown-item" target="_blank" href="https://payzen.io/de-DE/support/">German</a>
-          <a class="dropdown-item" target="_blank" href="https://payzen.io/pt-BR/support/">Portugese</a>
-          <a class="dropdown-item" target="_blank" href="https://payzen.io/es-CL/support/">Spanish</a>
-        </div>
-      </li>
-      <li class="nav-item">
+      <li class="nav-item show">
         <a class="nav-link" target="_blank" href="https://github.com/lyra">Github</a>
       </li>
     </ul>
@@ -64,13 +52,13 @@ if (mode.equals("IFRAME")) {
     <ul class="navbar-nav">
       <li class="nav-item dropdown show ">
           <a class="nav-link dropdown-toggle" href="#" id="navbardrop" data-toggle="dropdown">
-            ${lang}
+            <fmt:message key="lang_${lang}" />
           </a>
           <div class="dropdown-menu dropdown-menu-right">
-            <a class="dropdown-item" href="?lang=en"><fmt:message key="label.en" /></a>
-            <a class="dropdown-item" href="?lang=fr"><fmt:message key="label.fr" /></a>
-            <a class="dropdown-item" href="?lang=de"><fmt:message key="label.de" /></a>
-            <a class="dropdown-item" href="?lang=es"><fmt:message key="label.es" /></a>
+            <a class="dropdown-item" href="?lang=en"><fmt:message key="lang_en" /></a>
+            <a class="dropdown-item" href="?lang=fr"><fmt:message key="lang_fr" /></a>
+            <a class="dropdown-item" href="?lang=de"><fmt:message key="lang_de" /></a>
+            <a class="dropdown-item" href="?lang=es"><fmt:message key="lang_es" /></a>
           </div>
       </li>
     </ul>
@@ -81,120 +69,175 @@ if (mode.equals("IFRAME")) {
 <div class="container">
     <div class="row">
         <div class="col-lg-12">
-            <h1><fmt:message key="label.lyrasolution" /> </h1>
-            <p class="lead"><fmt:message key="label.starterkit" /> </p>
-            <h2><fmt:message key="label.requirements" /> :</h2>
+            <h1><fmt:message key="solution_title" /> </h1>
+            <p class="lead"><fmt:message key="solution_description" /> </p>
+            <h2><fmt:message key="requirements" />:</h2>
             <ul>
-                <li>PHP (5.4 +)</li>
-                <li><fmt:message key="label.in" /> <code>config.properties :</code>
+                <li><fmt:message key="servlet_container"><fmt:param value="Tomcat 9" /></fmt:message></li>
+                <li><fmt:message key="java_compiler"><fmt:param value="1.8" /></fmt:message></li>
+                <li><fmt:message key="maven_version"><fmt:param value="3.9" /></fmt:message></li>
+                <li><fmt:message key="in_config"><fmt:param value="<code>config.properties</code>" /></fmt:message>:
                 <ul>
-                    <li><fmt:message key="label.shopid" /> </li>
-                    <li><fmt:message key="label.certtestprod" /> </li>
-                    <li><fmt:message key="label.modetestprod" /> </li>
-                    <li><fmt:message key="label.platformurl" /> </li>
-                    <li><fmt:message key="label.debugdesc" /></li>
+                    <li><fmt:message key="shop_id" /></li>
+                    <li><fmt:message key="sha_key" /></li>
+                    <li><fmt:message key="ctx_mode" /></li>
+                    <li><fmt:message key="gateway_url" /></li>
+                    <li><fmt:message key="debug_mode_desc" /></li>
                     </ul>
                 </li>
             </ul>
 
-            <h2><fmt:message key="label.formexamples" /> </h2>
-            <h2 style="text-align: center;"><fmt:message key="label.checkouttitle" /></h2>
+            <hr />
+            <h2><fmt:message key="form_example_title" /></h2>
+            <h2 style="text-align: center;"><fmt:message key="checkout_title" /></h2>
             <form class="form-horizontal" role="form" action="standardpayment" method="post" id="checkout_form" onsubmit="return checkmode();" <%=target %>>
-            <button type="button" class="accordion"><fmt:message key="label.orderdetails" /></button>
-                <div class="panel">
-                    <div class="col-md-9">
-                        <table class="table table-striped">
-                          <tr>
-                              <td>
-                                  <ul>
-                                    <li><fmt:message key="label.item1" /></li>
-                                    <li><fmt:message key="label.item2" /></li>
-                                    <li>...</li>
-                                  </ul>
+                <button type="button" class="accordion"><fmt:message key="order_details" /></button>
+                <div class="panel" style="display: block;">
+                    <div class="col-md-12">
+                        <table class="table" aria-label="">
+                            <tr>
+                                <th class="left" scope="col"><fmt:message key="item_title" /></th>
+                                <th scope="col"><fmt:message key="amount_title" /></th>
+                            </tr>
+                            <tr>
+                                <td>
+                                    1. <fmt:message key="item1_label" />
                                 </td>
                                 <td>
-                                  <ul>
-                                    <li><fmt:message key="label.amount1" /></li>
-                                    <li><fmt:message key="label.amount2" /></li>
-                                    <li>...</li>
-                                  </ul>
+                                    <fmt:message key="item1_amount" />
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    2. <fmt:message key="item2_label" />
+                                </td>
+                                <td>
+                                    <fmt:message key="item2_amount" />
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    3. ...
+                                </td>
+                                <td>
+                                    ...
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    <h3><fmt:message key="total_label" /></h3>
+                                </td>
+                                <td>
+                                    <input class="" style="color:green; text-align: center;" type="number" name="vads_amount" id="vads_amount" value="1000" required min="0">
+                                    <select class="" name="vads_currency" id="vads_currency">
+                                        <option value="978" selected>EUR</option>
+                                        <option value="840">USD</option>
+                                    </select>
+                                    <label for="vads_amount"><fmt:message key="order_amount_desc" /></label>
                                 </td>
                             </tr>
                         </table>
                     </div>
-                    <div class="col-md-3">
-                      <div style="text-align: center;">
-                          <h3><fmt:message key="label.total" /></h3>
-                          <input class="forminput" style="color:green; text-align: center;" type="number" name="vads_amount" id="vads_amount" value="1000" required min="0">
-                          <label for="vads_amount"><fmt:message key="label.amountdesc" /></label>
-                          <select class="forminput" name="vads_currency" id="vads_currency">
-                              <option value="978" selected>EUR</option>
-                              <option value="840">USD</option>
-                          </select>
-                      </div>
+                </div>
+
+                <button type="button" class="accordion"><fmt:message key="customer_data" /></button>
+                <div class="panel" style="display: block;">
+                    <input type="hidden" id="vads_language" name="vads_language" value="${lang}">
+
+                    <div class="col-md-12">
+                        <div class="form-group row">
+                            <label for="vads_order_id" class="col-sm-3 col-form-label">vads_order_id</label>
+                            <div class="col-sm-9">
+                              <input type="text" class="form-control" id="vads_order_id" name="vads_order_id" value="123456">
+                              <small class="form-text text-muted"><fmt:message key="order_id_desc" /></small>
+                            </div>
+                        </div>
+                        <div class="form-group row">
+                            <label for="vads_cust_id" class="col-sm-3 col-form-label">vads_cust_id</label>
+                            <div class="col-sm-9">
+                              <input type="text" class="form-control" id="vads_cust_id" name="vads_cust_id" value="2380">
+                              <small class="form-text text-muted"><fmt:message key="customer_id_desc" /></small>
+                            </div>
+                        </div>
+                        <div class="form-group row">
+                            <label for="vads_cust_email" class="col-sm-3 col-form-label">vads_cust_email</label>
+                            <div class="col-sm-9">
+                              <input type="text" class="form-control" id="vads_cust_email" name="vads_cust_email" value="henri@gmail.com">
+                              <small class="form-text text-muted"><fmt:message key="customer_email_desc" /></small>
+                            </div>
+                        </div>
+                        <div class="form-group row">
+                            <label for="vads_cust_first_name" class="col-sm-3 col-form-label">vads_cust_first_name</label>
+                            <div class="col-sm-9">
+                              <input type="text" class="form-control" id="vads_cust_first_name" name="vads_cust_first_name" value="Henri">
+                              <small class="form-text text-muted"><fmt:message key="customer_firstname_desc" /></small>
+                            </div>
+                        </div>
+                        <div class="form-group row">
+                            <label for="vads_cust_last_name" class="col-sm-3 col-form-label">vads_cust_last_name</label>
+                            <div class="col-sm-9">
+                              <input type="text" class="form-control" id="vads_cust_last_name" name="vads_cust_last_name" value="Durand">
+                              <small class="form-text text-muted"><fmt:message key="customer_lastname_desc" /></small>
+                            </div>
+                        </div>
+                        <div class="form-group row">
+                            <label for="vads_cust_address" class="col-sm-3 col-form-label">vads_cust_address</label>
+                            <div class="col-sm-9">
+                              <input type="text" class="form-control" id="vads_cust_address" name="vads_cust_address" value="23 Bd Paul Picot">
+                              <small class="form-text text-muted"><fmt:message key="customer_address_desc" /></small>
+                            </div>
+                        </div>
+                        <div class="form-group row">
+                            <label for="vads_cust_city" class="col-sm-3 col-form-label">vads_cust_city</label>
+                            <div class="col-sm-9">
+                              <input type="text" class="form-control" id="vads_cust_city" name="vads_cust_city" value="Toulon">
+                              <small class="form-text text-muted"><fmt:message key="customer_city_desc" /></small>
+                            </div>
+                        </div>
+                        <div class="form-group row">
+                            <label for="vads_cust_zip" class="col-sm-3 col-form-label">vads_cust_zip</label>
+                            <div class="col-sm-9">
+                              <input type="text" class="form-control" id="vads_cust_zip" name="vads_cust_zip" value="83200">
+                              <small class="form-text text-muted"><fmt:message key="customer_zip_desc" /></small>
+                            </div>
+                        </div>
+                        <div class="form-group row">
+                            <label for="vads_cust_country" class="col-sm-3 col-form-label">vads_cust_country</label>
+                            <div class="col-sm-9">
+                              <input type="text" class="form-control" id="vads_cust_country" name="vads_cust_country" value="FR">
+                              <small class="form-text text-muted"><fmt:message key="customer_country_desc" /></small>
+                            </div>
+                        </div>
+                        <div class="form-group row">
+                            <label for="vads_cust_phone" class="col-sm-3 col-form-label">vads_cust_phone</label>
+                            <div class="col-sm-9">
+                              <input type="text" class="form-control" id="vads_cust_phone" name="vads_cust_phone" value="06002822672">
+                              <small class="form-text text-muted"><fmt:message key="customer_phone_desc" /></small>
+                            </div>
+                        </div>
                     </div>
                 </div>
 
-                <button type="button" class="accordion"><fmt:message key="label.clientssettings" /></button>
-                <div class="panel">
-                  <input type="hidden" id="vads_language" name="vads_language" value="${lang}">
-                  <label style="width: 15%" for="order_id">order_id</label>
-                  <input class="forminput" type="text" id="vads_order_id" name="vads_order_id" value="123456">
-                  <label style="width: 55%; vertical-align: middle;"  for="vads_order_id"><fmt:message key="label.orderdesc" /></label><br>
-
-                  <label style="width: 15%" for="vads_cust_id">cust_id</label>
-                  <input class="forminput" type="text" id="vads_cust_id" name="vads_cust_id" value="2380">
-                  <label style="width: 55%; vertical-align: middle;"  for="vads_cust_id"><fmt:message key="label.custid" /></label><br>
-
-                  <label style="width: 15%" for="vads_cust_email">cust_email</label>
-                  <input class="forminput" type="text" id="vads_cust_email" name="vads_cust_email" value="henri@gmail.com">
-                  <label style="width: 55%; vertical-align: middle;"  for="vads_cust_email"><fmt:message key="label.custemail" /></label><br>
-
-                  <label style="width: 15%" for="vads_cust_first_name">vads_cust_first_name</label>
-                  <input class="forminput" type="text" id="vads_cust_first_name" name="vads_cust_first_name" value="Henri">
-                  <label style="width: 55%; vertical-align: middle;"  for="vads_cust_first_name"><fmt:message key="label.custfirstname" /></label><br>
-
-                  <label style="width: 15%" for="vads_cust_last_name">vads_cust_last_name</label>
-                  <input class="forminput" type="text" id="vads_cust_last_name" name="vads_cust_last_name" value="Durand">
-                  <label style="width: 55%; vertical-align: middle;"  for="vads_cust_last_name"><fmt:message key="label.custlastname" /></label><br>
-
-                  <label style="width: 15%" for="vads_cust_address">vads_cust_address</label>
-                  <input class="forminput" type="text" id="vads_cust_address" name="vads_cust_address" value="Bd Paul Picot">
-                  <label style="width: 55%; vertical-align: middle;"  for="vads_cust_address"><fmt:message key="label.custaddress" /></label><br>
-
-                  <label style="width: 15%" for="vads_cust_city">vads_cust_city</label>
-                  <input class="forminput" type="text" id="vads_cust_city" name="vads_cust_city" value="TOULON">
-                  <label style="width: 55%; vertical-align: middle;"  for="vads_cust_city"><fmt:message key="label.custcity" /></label><br>
-
-                  <label style="width: 15%" for="vads_cust_zip">vads_cust_zip</label>
-                  <input class="forminput" type="text" id="vads_cust_zip" name="vads_cust_zip" value="83200">
-                  <label style="width: 55%; vertical-align: middle;"  for="vads_cust_zip"><fmt:message key="label.custzip" /></label><br>
-
-                  <label style="width: 15%" for="vads_cust_country">vads_cust_country</label>
-                  <input class="forminput" type="text" id="vads_cust_country" name="vads_cust_country" value="FR">
-                  <label style="width: 55%; vertical-align: middle;"  for="vads_cust_country"><fmt:message key="label.custcountry" /></label><br>
-
-                  <label style="width: 15%" for="vads_cust_phone">vads_cust_phone</label>
-                  <input class="forminput" type="text" id="vads_cust_phone" name="vads_cust_phone" value="06002822672">
-                  <label style="width: 55%; vertical-align: middle;"  for="vads_cust_phone"><fmt:message key="label.custphone" /></label><br>
-                </div>
-
-                <button type="button" class="accordion"><fmt:message key="label.payment" /></button>
-                <div>
-                  <input type="radio" id="paymentmethod" name="paymentmethod" value="standard" checked> <fmt:message key="label.stdpayment" /><br>
-                  <input type="radio" id="paymentmethod" name="paymentmethod" value="multi2"> <fmt:message key="label.x2payment" /><br>
+                <button type="button" class="accordion"><fmt:message key="payment_title" /></button>
+                <div class="panel" style="display: block;">
+                    <label><input type="radio" id="paymentmethod" name="paymentmethod" value="standard" checked> <fmt:message key="standard_payment_title" /></label><br />
+                    <label><input type="radio" id="paymentmethod" name="paymentmethod" value="multi3"> <fmt:message key="multi_3x_payment_title" /></label>
+                    <br />
                 </div>
 
                 <% if (iframe) { %> <div id="iframeHolder"></div> <% } %>
-                <button class="forminput" id="submitButton" type="submit" form="checkout_form" value="Submit"><fmt:message key="label.sendform" /></button>
+                
+                <div class="col-md-12 text-center">
+                    <button class="btn btn-primary mb-2" id="submitButton" type="submit" form="checkout_form" value="Submit"><fmt:message key="button_submit_form" /></button>
+                </div>
 
-                <script type="text/javascript">
+                <script>
                     function checkmode() {
                         var paymentmethod = $('input:radio[name="paymentmethod"]:checked').val();
                         var actionfile = '';
 
                         switch (paymentmethod) {
-                          case 'multi2':
+                          case 'multi3':
                             actionfile = 'MultiPayment';
                             break;
 
@@ -207,7 +250,7 @@ if (mode.equals("IFRAME")) {
                         document.getElementById('checkout_form').action = actionfile;
                         <% if (iframe) { %>
                             enableSubmitButton(); // Disable the submit button.
-                            $('#iframeHolder').html('<iframe name="payframe" src="' + actionfile + '" width="50%" height="550" scrolling="yes" /> <div style="float:right;"><button class="close" type="button" onclick="removeIframe();">X</button></div>');
+                            $('#iframeHolder').html('<iframe name="payframe" src="' + actionfile + '" width="50%" height="550" scrolling="yes" /><div style="float: right;"><button class="close" type="button" onclick="removeIframe();">X</button></div>');
                         <% } %>
                     }
 
@@ -230,18 +273,19 @@ if (mode.equals("IFRAME")) {
                 </script>
             </form>
 
-            <h2><fmt:message key="label.paymentanalysis" /> </h2>
-            <div id="Info">
-                <strong><fmt:message key="label.ipn" /> </strong><br />
-                <p><fmt:message key="label.ipndesc" /> </p>
+            <hr />
+            <h2><fmt:message key="payment_analysis_title" /></h2>
+            <div id="info">
+                <strong><fmt:message key="ipn_subtitle" /></strong><br />
+                <p><fmt:message key="ipn_paragraph" /></p>
 
-                <strong><fmt:message key="label.returnurl" /> </strong><br />
-                <p><fmt:message key="label.clientcomesback" /> </p>
-                <p><fmt:message key="label.formreturndesc" /> </p>
+                <strong><fmt:message key="return_url_subtitle" /></strong><br />
+                <p><fmt:message key="return_url_paragraph" /></p>
+                <p><fmt:message key="return_url_paragraph2" /></p>
+
+                <strong><fmt:message key="find_help_subtitle" /></strong><br />
+                <p><fmt:message key="find_help_paragraph" /></p>
             </div>
-
-            <h2><fmt:message key="label.findhelp" /> </h2>
-            <p><strong><fmt:message key="label.supportrecommends" /> </strong> <a href="https://payzen.io" target="_blank"> payzen.io</a></p>
         </div>
     </div>
 </div>
