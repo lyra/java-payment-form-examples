@@ -7,7 +7,7 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/functions" prefix = "fn" %>
 
-<c:set var="lang" value="${not empty request.vads_language ? request.vads_language : not empty lang  ? lang : pageContext.request.locale}" scope="session" />
+<c:set var="lang" value="${not empty request.vads_language ? request.vads_language : not empty lang ? lang : pageContext.request.locale}" scope="session" />
 
 <fmt:requestEncoding value="UTF-8" />
 <fmt:setLocale value="${lang}" />
@@ -46,7 +46,7 @@ if (authentified) {
 </head>
 <body>
 <nav class="navbar navbar-expand-lg navbar-dark bg-dark fixed-top">
-  <a class="navbar-brand" href="">Lyra</a>
+  <a class="navbar-brand" href="order.jsp">Lyra</a>
   <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
     <span class="navbar-toggler-icon"></span>
   </button>
@@ -59,16 +59,8 @@ if (authentified) {
     </ul>
 
     <ul class="navbar-nav">
-      <li class="nav-item dropdown show ">
-          <a class="nav-link dropdown-toggle" href="#" id="navbardrop" data-toggle="dropdown">
-            <fmt:message key="lang_${lang}" />
-          </a>
-          <div class="dropdown-menu dropdown-menu-right">
-            <a class="dropdown-item" href="?lang=en"><fmt:message key="lang_en" /></a>
-            <a class="dropdown-item" href="?lang=fr"><fmt:message key="lang_fr" /></a>
-            <a class="dropdown-item" href="?lang=de"><fmt:message key="lang_de" /></a>
-            <a class="dropdown-item" href="?lang=es"><fmt:message key="lang_es" /></a>
-          </div>
+      <li class="nav-item show">
+          <a class="nav-link" href=""><fmt:message key="lang_${lang}" /></a>
       </li>
     </ul>
   </div>
