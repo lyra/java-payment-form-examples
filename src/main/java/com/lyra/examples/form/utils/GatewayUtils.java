@@ -26,6 +26,9 @@ public class GatewayUtils {
     private static final String ALGO_SHA_256 = "SHA-256";
     private static final Charset ENCODING = StandardCharsets.UTF_8;
 
+    private static final String EXAMPLE_NAME = "Java_Form_Examples";
+    private static final String EXAMPLE_VERSION = "1.0.0";
+
     private static final Random RANDOM = new SecureRandom();
 
     private static final Logger logger = Logger.getLogger(Logger.GLOBAL_LOGGER_NAME);
@@ -39,9 +42,12 @@ public class GatewayUtils {
         return String.format("%06d", RANDOM.ints(1, 899999 + 1).findFirst().getAsInt());
     }
 
+    public static String contribParam() {
+        return EXAMPLE_NAME + "_" + EXAMPLE_VERSION;
+    }
+
     public static boolean isAuthentified(HttpServletRequest request) {
-        String secretKey = "PRODUCTION".equals(AppUtils.getConfigProperty("ctx_mode"))
-                ? AppUtils.getConfigProperty("key_prod")
+        String secretKey = "PRODUCTION".equals(AppUtils.getConfigProperty("ctx_mode")) ? AppUtils.getConfigProperty("key_prod")
                 : AppUtils.getConfigProperty("key_test");
 
         String signAlgo = AppUtils.getConfigProperty("sign_algo");
@@ -53,13 +59,11 @@ public class GatewayUtils {
     }
 
     /**
-     * Build signature from provided parameters and secret key. Parameters must be
-     * encoded in UTF-8.
+     * Build signature from provided parameters and secret key. Parameters must be encoded in UTF-8.
      *
-     * @param TreeMap<String, String> formParameters payment gateway
-     *                        request/response parameters
-     * @param String          secretKey shop key
-     * @param String          signAlgo signature algorithm
+     * @param TreeMap<String, String> formParameters payment gateway request/response parameters
+     * @param String secretKey shop key
+     * @param String signAlgo signature algorithm
      * @return String
      */
     public static String buildSignature(SortedMap<String, String> formParameters, String secretKey, String signAlgo) {
@@ -75,38 +79,37 @@ public class GatewayUtils {
 
         // Sign.
         switch (signAlgo) {
-        case ALGO_SHA_1:
-            try {
-                return sha1Hex(message);
-            } catch (NoSuchAlgorithmException e) {
-                logger.severe("SHA-1 algorithm is not avilable: " + e.getMessage());
-            }
+            case ALGO_SHA_1:
+                try {
+                    return sha1Hex(message);
+                } catch (NoSuchAlgorithmException e) {
+                    logger.severe("SHA-1 algorithm is not avilable: " + e.getMessage());
+                }
 
-            break;
+                break;
 
-        case ALGO_SHA_256:
-            try {
-                return hmacSha256Base64(message, secretKey);
-            } catch (InvalidKeyException | NoSuchAlgorithmException e) {
-                logger.severe("An error occurred when trying to sign with HMAC-SHA-256: " + e.getMessage());
-            }
+            case ALGO_SHA_256:
+                try {
+                    return hmacSha256Base64(message, secretKey);
+                } catch (InvalidKeyException | NoSuchAlgorithmException e) {
+                    logger.severe("An error occurred when trying to sign with HMAC-SHA-256: " + e.getMessage());
+                }
 
-            break;
+                break;
 
-        default:
-            throw new IllegalArgumentException("Algorithm " + signAlgo + " is not supported.");
+            default:
+                throw new IllegalArgumentException("Algorithm " + signAlgo + " is not supported.");
         }
 
         return null;
     }
 
     /**
-     * Build signature from provided parameters and secret key. Parameters must be
-     * encoded in UTF-8.
+     * Build signature from provided parameters and secret key. Parameters must be encoded in UTF-8.
      *
      * @param HttpServletRequest payment gateway parameters
-     * @param String             secretKey shop key
-     * @param String             signAlgo signature algorithm
+     * @param String secretKey shop key
+     * @param String signAlgo signature algorithm
      * @return String
      */
     public static String buildSignature(HttpServletRequest request, String secretKey, String signAlgo) {
@@ -131,8 +134,7 @@ public class GatewayUtils {
      * @param String secretKey shop key
      * @return String
      */
-    public static String hmacSha256Base64(String message, String secretKey)
-            throws NoSuchAlgorithmException, InvalidKeyException {
+    public static String hmacSha256Base64(String message, String secretKey) throws NoSuchAlgorithmException, InvalidKeyException {
         // Prepare HMAC-SHA-256 cipher algorithm with provided secretKey.
         Mac hmacSha256;
         try {

@@ -87,6 +87,8 @@ public class StandardPayment extends HttpServlet {
             requestData.put("vads_redirect_error_timeout", "0");
         }
 
+        requestData.put("vads_contrib", GatewayUtils.contribParam());
+
         String key = "PRODUCTION".equals(AppUtils.getConfigProperty("ctx_mode")) ? AppUtils.getConfigProperty("key_prod")
                 : AppUtils.getConfigProperty("key_test");
 
