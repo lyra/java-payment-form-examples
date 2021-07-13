@@ -15,7 +15,7 @@ public class AppUtils {
     private static final String CONF_PATH = "config.properties";
     private static final Properties CONF_PROPERTIES = new Properties();
 
-    private static final String LOG_FILE_PATH = "payment-logs.log";
+    private static final String LOG_FILE_PATTERN = "payment-%g.log";
 
     private static final Logger LOGGER = Logger.getLogger("UTILS");
 
@@ -35,12 +35,13 @@ public class AppUtils {
 
         try {
             // Check if logs directory exists.
-            File logDir = new File("./logs/");
+            File logDir = new File(System.getProperty("catalina.base") + "/logs/");
             if (!logDir.exists()) {
                 logDir.mkdir();
             }
 
-            FileHandler file = new FileHandler("logs/" + LOG_FILE_PATH);
+            FileHandler file = new FileHandler(logDir.getAbsolutePath() + File.separator + LOG_FILE_PATTERN, 5 * 1024 * 1024, 5,
+                    true);
 
             // Set a text formatter.
             file.setFormatter(new SimpleFormatter());
