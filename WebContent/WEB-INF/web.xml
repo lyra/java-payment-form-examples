@@ -5,22 +5,4 @@
     <welcome-file-list>
         <welcome-file>order.jsp</welcome-file>
     </welcome-file-list>
-
-    <servlet>
-        <servlet-name>StandardPayment</servlet-name>
-        <servlet-class>com.lyra.examples.form.servlet.StandardPayment</servlet-class>
-    </servlet>
-    <servlet-mapping>
-        <servlet-name>StandardPayment</servlet-name>
-        <url-pattern>/standardpayment</url-pattern>
-    </servlet-mapping>
-
-    <servlet>
-        <servlet-name>MultiPayment</servlet-name>
-        <servlet-class>com.lyra.examples.form.servlet.MultiPayment</servlet-class>
-    </servlet>
-    <servlet-mapping>
-        <servlet-name>MultiPayment</servlet-name>
-        <url-pattern>/multipayment</url-pattern>
-    </servlet-mapping>
 </web-app>

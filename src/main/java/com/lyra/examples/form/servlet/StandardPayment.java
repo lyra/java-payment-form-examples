@@ -8,7 +8,7 @@ import javax.servlet.http.HttpServletRequest;
 /**
  * Servlet implementation class for standard payments.
  */
-@WebServlet("/StandardPayment")
+@WebServlet("/standard-payment")
 public class StandardPayment extends AbstractPayment {
     private static final long serialVersionUID = -7791685372845073413L;
 

@@ -10,7 +10,7 @@ import com.lyra.examples.form.error.PaymentException;
 /**
  * Servlet implementation class for payments in installments.
  */
-@WebServlet("/MultiPayment")
+@WebServlet("/multi-payment")
 public class MultiPayment extends AbstractPayment {
     private static final long serialVersionUID = 7489239157000662431L;
 

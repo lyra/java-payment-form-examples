@@ -90,7 +90,7 @@ if (mode.equals("IFRAME")) {
             <hr />
             <h2><fmt:message key="form_example_title" /></h2>
             <h2 style="text-align: center;"><fmt:message key="checkout_title" /></h2>
-            <form class="form-horizontal" role="form" action="StandardPayment" method="post" id="checkout_form" onsubmit="return checkmode();" <%=target %>>
+            <form class="form-horizontal" role="form" action="standard-payment" method="post" id="checkout_form" onsubmit="return checkmode();" <%=target %>>
                 <button type="button" class="accordion"><fmt:message key="order_details" /></button>
                 <div class="panel" style="display: block;">
                     <div class="col-md-12">
@@ -240,12 +240,12 @@ if (mode.equals("IFRAME")) {
                         switch (paymentMethod) {
                           case 'multi3':
                           case 'multi4':
-                            actionFile = 'MultiPayment';
+                            actionFile = 'multi-payment';
                             break;
 
                           case 'standard':
                           default:
-                            actionFile = 'StandardPayment';
+                            actionFile = 'standard-payment';
                             break;
                         }
 
@@ -280,6 +280,7 @@ if (mode.equals("IFRAME")) {
             <div id="info">
                 <strong><fmt:message key="ipn_subtitle" /></strong><br />
                 <p><fmt:message key="ipn_paragraph" /></p>
+                <p><fmt:message key="ipn_paragraph2" /> http://www.your-site.com/java-payment-form-examples/ipn-processor</p>
 
                 <strong><fmt:message key="return_url_subtitle" /></strong><br />
                 <p><fmt:message key="return_url_paragraph" /></p>
