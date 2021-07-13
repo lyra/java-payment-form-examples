@@ -20,7 +20,7 @@ The Java packages contain these resources:
 
 ## The first use
 
-1. Fill the `src/main/resources/config.properties` by your actual values from your gateway Back Office.
+1. Fill the `src/main/resources/config.properties` by your actual values from your gateway Back Office and replace the cancel and return URL host by your web server host.
 2. Generate a war and deploy it to your JSP/Servlet web server.
 3. Access the `order.jsp` page from your browser.
 4. Follow the indications to perform a payment.
