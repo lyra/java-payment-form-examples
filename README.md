@@ -2,7 +2,7 @@
 
 ## Introduction
 
-The code presented here is a demonstration of the implementation of the payment form integration in JAVA It aims to ease its use and learning.
+The code presented here is a demonstration of the implementation of the payment form integration in JAVA. It aims to ease its use and learning.
 
 ## Contents
 
@@ -14,7 +14,7 @@ The Java packages contain these resources:
 
 ## Pages
 
-* `WebContent/order.jsp`: This file simuates a payment form to be sent to the gateway.
+* `WebContent/order.jsp`: This file simulates a payment form to be sent to the gateway.
 * `WebContent/WEB-INF/form.jsp`: This is an intermediate redirection page. It displays the generated form for debug purposes.
 * `WebContent/return.jsp`: This is the return file at the end of the payment.
 
@@ -23,7 +23,7 @@ The Java packages contain these resources:
 1. Fill the `src/main/resources/config.properties` by your actual values from your gateway Back Office.
 2. Generate a war and deploy it to your JSP/Servlet web server.
 3. Access the `order.jsp` page from your browser.
-4. Follow the the indications to perform a payment.
+4. Follow the indications to perform a payment.
 
 ## License
 
