@@ -4,7 +4,7 @@
 
     <groupId>com.lyra.examples.form.servlet</groupId>
     <artifactId>java-payment-form-examples</artifactId>
-    <version>1.0.0-SNAPSHOT</version>
+    <version>1.0.0</version>
     <packaging>war</packaging>
     <description>Java payment form examples for Lyra gateway.</description>
 
