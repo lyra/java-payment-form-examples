@@ -1,25 +1,30 @@
-# PayZen VADS payment exemple - JAVA
+# Java payment form examples
 
 ## Introduction
-The code presented here is a demonstration of the implementation of the VADS PayZen payment system in JAVA, aimed to ease its use and learning.
+
+The code presented here is a demonstration of the implementation of the payment form integration in JAVA It aims to ease its use and learning.
 
 ## Contents
-*  `src/com/lyra/vads/config`, contains a centralized configuration and initialisation file.
-*  `src/main/resources`, contains the different translation files in French, English, German and Spanish each file.
-*  `src/com/lyra/vads/sdk`, Lyra SDK files.
-*  `src/com/lyra/vads/tools`, defining an utility class containing mainly methods to access modeule properties, initiate the logger and check authentification.
 
-## Example
-* `src/com/lyra/vads/examples`, this folder contains payment methods implimentation example files.
-* `WebContent/WEB-INF/form.jsp`, the file contains the payment form to be sent to the platform.
-* `WebContent/Return-payment.jsp`, the return file after payment.
+The Java packages contain these resources:
+* `src/main/resources/config.properties`: Contains a centralized configuration and initialisation file.
+* `src/main/resources/i18n`: Contains the different translation files for French, English, German and Spanish languages.
+* `src/main/java/com/lyra/examples/form/utils`: Contains a gateway utilitary class (for signature calculation, transaction ID generation and more) and an application utilitary class (for logger initialization and properties reading).
+* `src/main/java/com/lyra/examples/form/servlet`: This package contains the logic implementation of the payment examples.
+
+## Pages
+
+* `WebContent/order.jsp`: This file simuates a payment form to be sent to the gateway.
+* `WebContent/WEB-INF/form.jsp`: This is an intermediate redirection page. It displays the generated form for debug purposes.
+* `WebContent/return.jsp`: This is the return file at the end of the payment.
 
 ## The first use
-1. Place the files on the same directory, under the root of your web-server
-2. In `src/com/lyra/vads/config/config.properties`, fill the properties by the actual values of your PayZen account
-3. In `/src/com/lyra/vads/tools/Tools.java`, fill the constant `CONF_PATH` which is the absolute path to the `config.properties` filled in step 2.
-4. Access `Order.jsp` from your browser.
-5. Follow the PayZen indications to perform the payment.
 
-## Note
-* The documentation used to write this code was [Guide d'implementation formulaire de paiement, v3.4](https://payzen.io).
+1. Fill the `src/main/resources/config.properties` by your actual values from your gateway Back Office.
+2. Generate a war and deploy it to your JSP/Servlet web server.
+3. Access the `order.jsp` page from your browser.
+4. Follow the the indications to perform a payment.
+
+## License
+
+Each source file included in this distribution is licensed under the GNU GENERAL PUBLIC LICENSE (GPL 3.0). Please see LICENSE.txt for the full text of the GPL 3.0 license. It is also available through the world-wide-web at this URL: http://www.gnu.org/licenses/gpl.html.
