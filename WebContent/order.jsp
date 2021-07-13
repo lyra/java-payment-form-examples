@@ -90,7 +90,7 @@ if (mode.equals("IFRAME")) {
             <hr />
             <h2><fmt:message key="form_example_title" /></h2>
             <h2 style="text-align: center;"><fmt:message key="checkout_title" /></h2>
-            <form class="form-horizontal" role="form" action="standardpayment" method="post" id="checkout_form" onsubmit="return checkmode();" <%=target %>>
+            <form class="form-horizontal" role="form" action="StandardPayment" method="post" id="checkout_form" onsubmit="return checkmode();" <%=target %>>
                 <button type="button" class="accordion"><fmt:message key="order_details" /></button>
                 <div class="panel" style="display: block;">
                     <div class="col-md-12">
@@ -220,8 +220,9 @@ if (mode.equals("IFRAME")) {
 
                 <button type="button" class="accordion"><fmt:message key="payment_title" /></button>
                 <div class="panel" style="display: block;">
-                    <label><input type="radio" id="paymentmethod" name="paymentmethod" value="standard" checked> <fmt:message key="standard_payment_title" /></label><br />
-                    <label><input type="radio" id="paymentmethod" name="paymentmethod" value="multi3"> <fmt:message key="multi_3x_payment_title" /></label>
+                    <label><input type="radio" id="payment_method_std" name="payment_method" value="standard" checked> <fmt:message key="standard_payment_title" /></label><br />
+                    <label><input type="radio" id="payment_method_multi3" name="payment_method" value="multi3"> <fmt:message key="multi_3x_payment_title" /></label><br />
+                    <label><input type="radio" id="payment_method_multi4" name="payment_method" value="multi4"> <fmt:message key="multi_4x_payment_title" /></label>
                     <br />
                 </div>
 
@@ -233,24 +234,25 @@ if (mode.equals("IFRAME")) {
 
                 <script>
                     function checkmode() {
-                        var paymentmethod = $('input:radio[name="paymentmethod"]:checked').val();
-                        var actionfile = '';
+                        var paymentMethod = $('input:radio[name="payment_method"]:checked').val();
+                        var actionFile = '';
 
-                        switch (paymentmethod) {
+                        switch (paymentMethod) {
                           case 'multi3':
-                            actionfile = 'MultiPayment';
+                          case 'multi4':
+                            actionFile = 'MultiPayment';
                             break;
 
                           case 'standard':
                           default:
-                            actionfile = 'StandardPayment';
+                            actionFile = 'StandardPayment';
                             break;
                         }
 
-                        document.getElementById('checkout_form').action = actionfile;
+                        document.getElementById('checkout_form').action = actionFile;
                         <% if (iframe) { %>
                             enableSubmitButton(); // Disable the submit button.
-                            $('#iframeHolder').html('<iframe name="payframe" src="' + actionfile + '" width="50%" height="550" scrolling="yes" /><div style="float: right;"><button class="close" type="button" onclick="removeIframe();">X</button></div>');
+                            $('#iframeHolder').html('<iframe name="payframe" src="' + actionFile + '" width="50%" height="550" scrolling="yes" /><div style="float: right;"><button class="close" type="button" onclick="removeIframe();">X</button></div>');
                         <% } %>
                     }
 

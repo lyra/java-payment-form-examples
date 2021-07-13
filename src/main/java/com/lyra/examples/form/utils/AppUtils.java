@@ -17,7 +17,7 @@ public class AppUtils {
 
     private static final String LOG_FILE_PATH = "payment-logs.log";
 
-    private static final Logger LOGGER = Logger.getLogger(AppUtils.class.getName());
+    private static final Logger LOGGER = Logger.getLogger("UTILS");
 
     private AppUtils() {
         setupLogger(LOGGER);
@@ -47,7 +47,7 @@ public class AppUtils {
 
             logger.addHandler(file);
         } catch (IOException e) {
-            logger.log(Level.WARNING, "Unable to add new file handker to the logger.", e);
+            logger.log(Level.WARNING, "Unable to add new file handler to the logger.", e);
         }
     }
 

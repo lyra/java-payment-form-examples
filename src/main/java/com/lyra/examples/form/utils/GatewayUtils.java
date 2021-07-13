@@ -31,7 +31,7 @@ public class GatewayUtils {
 
     private static final Random RANDOM = new SecureRandom();
 
-    private static final Logger logger = Logger.getLogger(Logger.GLOBAL_LOGGER_NAME);
+    private static final Logger LOGGER = Logger.getLogger("UTILS");
 
     /**
      * Generate a random transaction ID from 1 to 899999.
@@ -42,10 +42,21 @@ public class GatewayUtils {
         return String.format("%06d", RANDOM.ints(1, 899999 + 1).findFirst().getAsInt());
     }
 
+    /**
+     * Get example description to send as vads_contrib parameter in payment requests.
+     *
+     * @return a string
+     */
     public static String contribParam() {
         return EXAMPLE_NAME + "_" + EXAMPLE_VERSION;
     }
 
+    /**
+     * Return true if the HTTP request parameters return a valid signature.
+     *
+     * @param request
+     * @return true if the request in authentified
+     */
     public static boolean isAuthentified(HttpServletRequest request) {
         String secretKey = "PRODUCTION".equals(AppUtils.getConfigProperty("ctx_mode")) ? AppUtils.getConfigProperty("key_prod")
                 : AppUtils.getConfigProperty("key_test");
@@ -83,7 +94,7 @@ public class GatewayUtils {
                 try {
                     return sha1Hex(message);
                 } catch (NoSuchAlgorithmException e) {
-                    logger.severe("SHA-1 algorithm is not avilable: " + e.getMessage());
+                    LOGGER.severe("SHA-1 algorithm is not avilable: " + e.getMessage());
                 }
 
                 break;
@@ -92,7 +103,7 @@ public class GatewayUtils {
                 try {
                     return hmacSha256Base64(message, secretKey);
                 } catch (InvalidKeyException | NoSuchAlgorithmException e) {
-                    logger.severe("An error occurred when trying to sign with HMAC-SHA-256: " + e.getMessage());
+                    LOGGER.severe("An error occurred when trying to sign with HMAC-SHA-256: " + e.getMessage());
                 }
 
                 break;
