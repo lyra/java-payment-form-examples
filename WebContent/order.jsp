@@ -90,7 +90,7 @@ if (mode.equals("IFRAME")) {
             <hr />
             <h2><fmt:message key="form_example_title" /></h2>
             <h2 style="text-align: center;"><fmt:message key="checkout_title" /></h2>
-            <form class="form-horizontal" role="form" action="standard-payment" method="post" id="checkout_form" onsubmit="return checkmode();" <%=target %>>
+            <form class="form-horizontal" role="form" action="standard-payment" method="post" id="checkout_form" onsubmit="return checkMode();" <%=target %>>
                 <button type="button" class="accordion"><fmt:message key="order_details" /></button>
                 <div class="panel" style="display: block;">
                     <div class="col-md-12">
@@ -226,14 +226,14 @@ if (mode.equals("IFRAME")) {
                     <br />
                 </div>
 
-                <% if (iframe) { %> <div id="iframeHolder"></div> <% } %>
-                
+                <% if (iframe) { %><div id="overlay"></div><div id="iframeHolder"></div><% } %>
+
                 <div class="col-md-12 text-center">
                     <button class="btn btn-primary mb-2" id="submitButton" type="submit" form="checkout_form" value="Submit"><fmt:message key="button_submit_form" /></button>
                 </div>
 
                 <script>
-                    function checkmode() {
+                    function checkMode() {
                         var paymentMethod = $('input:radio[name="payment_method"]:checked').val();
                         var actionFile = '';
 
@@ -250,9 +250,12 @@ if (mode.equals("IFRAME")) {
                         }
 
                         document.getElementById('checkout_form').action = actionFile;
+
                         <% if (iframe) { %>
-                            enableSubmitButton(); // Disable the submit button.
-                            $('#iframeHolder').html('<iframe name="payframe" src="' + actionFile + '" width="50%" height="550" scrolling="yes" /><div style="float: right;"><button class="close" type="button" onclick="removeIframe();">X</button></div>');
+                            diableSubmitButton(); // Disable the submit button.
+                            $('#iframeHolder').html('<div style="position: relative; right: 10%; top: 0;"><button class="close" type="button" onclick="removeIframe();">X</button></div><iframe name="payframe" src="' + actionFile + '" class="pay-iframe" scrolling="yes" />');
+
+                            document.getElementById('overlay').style.display = 'block';
                         <% } %>
                     }
 
@@ -260,16 +263,18 @@ if (mode.equals("IFRAME")) {
                         function removeIframe() {
                             $('#iframeHolder').html('');
                             enableSubmitButton(); // Disable the submit button.
+
+                            document.getElementById('overlay').style.display = 'none';
                         }
 
                         function diableSubmitButton() {
                             $('#iframeHolder').html('');
-                            $("#submitButton").attr("disabled", true); // Enable the submit button.
+                            $('#submitButton').attr('disabled', true); // Enable the submit button.
                         }
 
                         function enableSubmitButton() {
                             $('#iframeHolder').html('');
-                            $("#submitButton").attr("disabled", false); // Enable the submit button.
+                            $('#submitButton').attr('disabled', false); // Enable the submit button.
                         }
                     <% } %>
                 </script>
